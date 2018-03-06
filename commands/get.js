@@ -3,14 +3,19 @@ const ProgressBar = require('ascii-progress'),
   path = require('path'),
   checkDest = require('../utils/checkDestination'),
   getExt = require('../utils/getExtension'),
-  log = require('../utils/logToStdout'),
-  https = require('https');
+  log = require('../utils/logToStdout');
 
 module.exports = function (url, filename, dest) {
   checkDest(dest);
   const ext = getExt(url);
 
-  https.get(url, res => {
+  let protocol = null;
+
+  /^https:\/\/./.test(url) ?
+    protocol = require('https') :
+    protocol = require('http');
+
+  protocol.get(url, res => {
 
     const st = fs.createWriteStream(path.resolve(dest, filename + '.' + ext)),
       bar = new ProgressBar({

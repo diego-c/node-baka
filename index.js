@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-//const url = 'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4';
-
 const program = require('commander'),
     get = require('./commands/get');
 

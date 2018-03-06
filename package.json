@@ -13,6 +13,7 @@
   "scripts": {
     "start": "node index"
   },
+  "bin": "./index.js",
   "dependencies": {
     "ascii-progress": "^1.0.5",
     "commander": "^2.14.1",

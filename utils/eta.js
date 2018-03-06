@@ -1,5 +1,3 @@
-const round = require('./round');
-
 module.exports = (connectionSpeed, remaining) => {
     return format(remaining * 1000 / connectionSpeed);
 }
