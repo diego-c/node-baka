@@ -11,7 +11,8 @@
   "author": "diego-c",
   "license": "MIT",
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "test": "jest"
   },
   "bin": "./index.js",
   "dependencies": {
@@ -19,5 +20,9 @@
     "commander": "^2.14.1",
     "single-line-log": "^1.1.2",
     "speedometer": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.2.0",
+    "jest": "^22.4.2"
   }
 }

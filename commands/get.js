@@ -6,18 +6,25 @@ const ProgressBar = require('ascii-progress'),
   log = require('../utils/logToStdout');
 
 module.exports = function (url, filename, dest) {
+  filename = filename || 'file';
+  dest = dest || __dirname
+
   checkDest(dest);
-  const ext = getExt(url);
+  const ext = /\..+/.test(filename) ? filename.match(/\..+/)[0] : getExt(url);
 
   let protocol = null;
 
-  /^https:\/\/./.test(url) ?
-    protocol = require('https') :
+  if (!(/^https:\/\/./.test(url) || /^http:\/\/./.test(url))) {
+    throw new TypeError('The url must use either the http or the https protocol');
+  } else if (/^https:\/\/./.test(url)) {
+    protocol = require('https');
+  } else {
     protocol = require('http');
+  }
 
   protocol.get(url, res => {
 
-    const st = fs.createWriteStream(path.resolve(dest, filename + '.' + ext)),
+    const st = fs.createWriteStream(path.resolve(dest, (/\..+/.test(filename) ? filename : ('' + filename + ext)))),
       bar = new ProgressBar({
         schema: ':bar.red :percent.green',
         total: 100
@@ -29,5 +36,5 @@ module.exports = function (url, filename, dest) {
       });
       bar.update((st.bytesWritten / res.headers['content-length']));
     });
-  }).on('error', e => console.error(e));
+  }).on('error', e => console.log(e))
 }

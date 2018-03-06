@@ -9,5 +9,5 @@ module.exports = (filename, ext, destination, stream, response, bar, data) => {
         connectionSpeed = round(speed(data.length) / 1000, 2),
         ETA = eta(connectionSpeed, remaining);
 
-    log('\n' + 'Downloading ' + filename + '.' + ext + ' to ' + destination + '\n\n' + 'ETA: ', ETA + '\n' + 'Downloaded: ', downloaded + ' MB' + '\n' + 'Remaining: ', remaining + ' MB' + '\n' + 'Connection speed: ' + connectionSpeed + ' KB/s');
+    log('\n' + 'Downloading ' + (/\..+/.test(filename) ? filename : (filename + ext)) + ' to ' + destination + '\n\n' + 'ETA: ', ETA + '\n' + 'Downloaded: ', downloaded + ' MB' + '\n' + 'Remaining: ', remaining + ' MB' + '\n' + 'Connection speed: ' + connectionSpeed + ' KB/s');
 }
