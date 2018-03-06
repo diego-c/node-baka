@@ -3,9 +3,10 @@ const log = require('single-line-log').stdout,
     round = require('./round'),
     eta = require('./eta');
 
-module.exports = (fullFilename, destination, stream, response, bar, data) => {
-    const downloaded = round(stream.bytesWritten / 1000000, 2),
-        remaining = round((response.headers['content-length'] - stream.bytesWritten) / 1000000, 2),
+module.exports = (fullFilename, destination, written, total, data) => {
+
+    const downloaded = round(written / 1000000, 2),
+        remaining = round((total - written) / 1000000, 2),
         connectionSpeed = round(speed(data.length) / 1000, 2),
         ETA = eta(connectionSpeed, remaining);
 

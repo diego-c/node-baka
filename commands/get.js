@@ -1,10 +1,9 @@
 const ProgressBar = require('ascii-progress'),
-  fs = require('fs'),
-  path = require('path'),
+  { createWriteStream } = require('fs'),
+  { resolve } = require('path'),
   checkDest = require('../utils/checkDestination'),
   checkFilename = require('../utils/checkFilename'),
   checkProtocol = require('../utils/checkProtocol'),
-  getExt = require('../utils/getExtension'),
   log = require('../utils/logToStdout');
 
 module.exports = function (url, filename, dest) {
@@ -16,7 +15,7 @@ module.exports = function (url, filename, dest) {
 
   protocol.get(url, res => {
 
-    const st = fs.createWriteStream(path.resolve(dest, fullFilename)),
+    const st = createWriteStream(resolve(dest, fullFilename)),
       bar = new ProgressBar({
         schema: ':bar.red :percent.green',
         total: 100
@@ -24,9 +23,13 @@ module.exports = function (url, filename, dest) {
 
     res.on('data', d => {
       st.write(d, () => {
-        log(fullFilename, dest, st, res, bar, d);
+        const written = st.bytesWritten,
+          total = res.headers['content-length'];
+
+        bar.update(written / total);
+        log(fullFilename, dest, written, total, d);
       });
-      bar.update((st.bytesWritten / res.headers['content-length']));
+
     });
   }).on('error', e => console.log(e))
 }
