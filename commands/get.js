@@ -2,6 +2,8 @@ const ProgressBar = require('ascii-progress'),
   fs = require('fs'),
   path = require('path'),
   checkDest = require('../utils/checkDestination'),
+  checkFilename = require('../utils/checkFilename'),
+  checkProtocol = require('../utils/checkProtocol'),
   getExt = require('../utils/getExtension'),
   log = require('../utils/logToStdout');
 
@@ -9,21 +11,8 @@ module.exports = function (url, filename, dest) {
   filename = filename || 'file';
   dest = dest || __dirname;
   checkDest(dest);
-
-  let fullFilename = filename;
-  if (!/\..+/.test(filename)) {
-    fullFilename = '' + filename + getExt(url)
-  }
-
-  let protocol = null;
-
-  if (!(/^https:\/\/./.test(url) || /^http:\/\/./.test(url))) {
-    throw new TypeError('The url must use either the http or the https protocol');
-  } else if (/^https:\/\/./.test(url)) {
-    protocol = require('https');
-  } else {
-    protocol = require('http');
-  }
+  const fullFilename = checkFilename(filename, url);
+  const protocol = checkProtocol(url);
 
   protocol.get(url, res => {
 
