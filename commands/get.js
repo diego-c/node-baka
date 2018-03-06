@@ -7,10 +7,13 @@ const ProgressBar = require('ascii-progress'),
 
 module.exports = function (url, filename, dest) {
   filename = filename || 'file';
-  dest = dest || __dirname
-
+  dest = dest || __dirname;
   checkDest(dest);
-  const ext = /\..+/.test(filename) ? filename.match(/\..+/)[0] : getExt(url);
+
+  let fullFilename = filename;
+  if (!/\..+/.test(filename)) {
+    fullFilename = '' + filename + getExt(url)
+  }
 
   let protocol = null;
 
@@ -24,7 +27,7 @@ module.exports = function (url, filename, dest) {
 
   protocol.get(url, res => {
 
-    const st = fs.createWriteStream(path.resolve(dest, (/\..+/.test(filename) ? filename : ('' + filename + ext)))),
+    const st = fs.createWriteStream(path.resolve(dest, fullFilename)),
       bar = new ProgressBar({
         schema: ':bar.red :percent.green',
         total: 100
@@ -32,7 +35,7 @@ module.exports = function (url, filename, dest) {
 
     res.on('data', d => {
       st.write(d, () => {
-        log(filename, ext, dest, st, res, bar, d);
+        log(fullFilename, dest, st, res, bar, d);
       });
       bar.update((st.bytesWritten / res.headers['content-length']));
     });
