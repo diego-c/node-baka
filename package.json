@@ -1,0 +1,22 @@
+{
+  "name": "baka-node",
+  "version": "0.0.1",
+  "description": "A simple CLI tool to download files from the web",
+  "keywords": [
+    "cli",
+    "download",
+    "commander"
+  ],
+  "main": "index.js",
+  "author": "diego-c",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index"
+  },
+  "dependencies": {
+    "ascii-progress": "^1.0.5",
+    "commander": "^2.14.1",
+    "single-line-log": "^1.1.2",
+    "speedometer": "^1.0.0"
+  }
+}
