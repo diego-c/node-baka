@@ -1,5 +1,5 @@
 {
-  "name": "baka-node",
+  "name": "node-baka",
   "version": "0.0.1",
   "description": "A simple CLI tool to download files from the web",
   "keywords": [
