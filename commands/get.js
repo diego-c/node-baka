@@ -46,9 +46,12 @@ module.exports = function (url, filename, dest) {
         }
       })
     }).on('error', e => {
-      throw e;
+      return reject(e);
     })
   })
+    .catch(err => {
+      console.log(err);
+    })
 }
 
 class DownloadError extends Error {
