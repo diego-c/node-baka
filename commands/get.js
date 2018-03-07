@@ -1,6 +1,7 @@
 const ProgressBar = require('ascii-progress'),
-  { createWriteStream } = require('fs'),
+  { createWriteStream, statSync } = require('fs'),
   { resolve } = require('path'),
+  onFinished = require('on-finished'),
   checkDest = require('../utils/checkDestination'),
   checkFilename = require('../utils/checkFilename'),
   checkProtocol = require('../utils/checkProtocol'),
@@ -19,17 +20,39 @@ module.exports = function (url, filename, dest) {
       bar = new ProgressBar({
         schema: ':bar.red :percent.green',
         total: 100
-      });
+      }),
+      total = res.headers['content-length'];
 
     res.on('data', d => {
       st.write(d, () => {
-        const written = st.bytesWritten,
-          total = res.headers['content-length'];
+        const written = st.bytesWritten;
 
         bar.update(written / total);
-        log(fullFilename, dest, written, total, d);
-      });
+        const isFinished = onFinished.isFinished(res);
 
+        log(fullFilename, dest, written, total, d, isFinished);
+      });
     });
-  }).on('error', e => console.log(e))
+
+    onFinished(res, (err, res) => {
+      return new Promise((resolve, reject) => {
+        const downloaded = statSync(resolve(dest, fullFilename)).size;
+
+        if (!downloaded || (total && (downloaded < total))) {
+          return reject(DownloadError('The download failed! ', err));
+        } else {
+          return resolve({ fullFilename, destination: dest });
+        }
+      });
+    })
+  }).on('error', e => {
+    throw e;
+  })
+}
+
+class DownloadError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'DownloadError';
+  }
 }

@@ -1,10 +1,15 @@
 const get = require('../commands/get'),
-    url = 'https://player.vimeo.com/external/189545487.hd.mp4?s=131fa753bd9d7d6085af29f3603f4b65cbb3ab31&profile_id=174&oauth2_token_id=57447761';
+    { resolve } = require('path'),
+    url = 'https://www.petmd.com/sites/default/files/petmd-cat-happy-10.jpg';
 
 // to be fixed
 describe('get <url> command', () => {
-    it('downloads vid.mp4 to the current directory', () => {
+    it('downloads cat.jpg to the same directory as the "get" function', () => {
         jest.setTimeout(60000);
-        return expect(get(url, 'vid.mp4')).resolves.toBe({ filename: 'vid.mp4', extension: '.mp4', destination: __dirname });
+        return wrapper(get, url, 'cat').then(data => expect(data).toEqual({ fullFilename: 'cat.jpg', destination: resolve(__dirname, '../commands/cat.jpg') }));
     });
 });
+
+function wrapper(callback, ...args) {
+
+}
