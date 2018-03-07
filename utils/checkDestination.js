@@ -1,6 +1,13 @@
 const { existsSync, mkdirSync } = require('fs');
 
-module.exports = dest => {
+/**
+ * Checks a destination path
+ * If it doesn't exist, creates one or more directories until it's valid
+ * @param { string } dest The destination path to be checked
+ * @returns { void } 
+ */
+
+const checkDestination = dest => {
     const destinations = dest.split('/');
     let currDest = destinations[0];
 
@@ -11,3 +18,5 @@ module.exports = dest => {
         }
     })
 }
+
+module.exports = checkDestination;

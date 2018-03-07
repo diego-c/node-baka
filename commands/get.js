@@ -8,7 +8,13 @@ const ProgressBar = require('ascii-progress'),
   log = require('../utils/logToStdout'),
   DownloadError = require('../errors/DownloadError');
 
-module.exports = function (url, filename, dest) {
+/**
+ * Download a resource from the web
+ * @param { string } url URL of the resource to be downloaded
+ * @param { string | null } filename Name of the file to be stored. Defaults to "file"
+ * @param { string | null } dest Path to store the file. Defaults to the current directory.
+ */
+const get = (url, filename, dest) => {
   return new Promise((resolve, reject) => {
 
     filename = filename || 'file';
@@ -54,3 +60,5 @@ module.exports = function (url, filename, dest) {
       console.log(err);
     })
 }
+
+module.exports = get;
