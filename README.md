@@ -34,6 +34,10 @@ Name of the file to be downloaded. Defaults to "file".
 
 __NOTE:__ If you don't specify the file extension, node-baka will try to guess based on the `url`. You should avoid omitting it.
 
+# Installation
+
+`npm install -g node-baka`
+
 # Local build
 
 - Clone the repo: `git clone https://github.com/diego-c/node-baka.git`
