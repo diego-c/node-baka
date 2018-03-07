@@ -53,6 +53,10 @@ __NOTE:__ If you don't specify the file extension, node-baka will try to guess b
 
 To run all tests: `npm test or yarn test`
 
+# API
+
+Check the documentation at [node-baka docs](https://diego-c.github.io/node-baka/ "node-baka documentation")
+
 # Contributing
 
 Issues and PRs are welcome. Please write accompanying tests with your PRs if have the time.
