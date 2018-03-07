@@ -1,6 +1,6 @@
 const ProgressBar = require('ascii-progress'),
   { createWriteStream, statSync } = require('fs'),
-  { resolve } = require('path'),
+  path = require('path'),
   onFinished = require('on-finished'),
   checkDest = require('../utils/checkDestination'),
   checkFilename = require('../utils/checkFilename'),
@@ -8,45 +8,46 @@ const ProgressBar = require('ascii-progress'),
   log = require('../utils/logToStdout');
 
 module.exports = function (url, filename, dest) {
-  filename = filename || 'file';
-  dest = dest || __dirname;
-  checkDest(dest);
-  const fullFilename = checkFilename(filename, url);
-  const protocol = checkProtocol(url);
+  return new Promise((resolve, reject) => {
 
-  protocol.get(url, res => {
+    filename = filename || 'file';
+    dest = dest || __dirname;
+    checkDest(dest);
+    const fullFilename = checkFilename(filename, url);
+    const protocol = checkProtocol(url);
 
-    const st = createWriteStream(resolve(dest, fullFilename)),
-      bar = new ProgressBar({
-        schema: ':bar.red :percent.green',
-        total: 100
-      }),
-      total = res.headers['content-length'];
+    protocol.get(url, res => {
 
-    res.on('data', d => {
-      st.write(d, () => {
-        const written = st.bytesWritten;
+      const st = createWriteStream(path.resolve(dest, fullFilename)),
+        bar = new ProgressBar({
+          schema: ':bar.red :percent.green',
+          total: 100
+        }),
+        total = res.headers['content-length'];
 
-        bar.update(written / total);
-        const isFinished = onFinished.isFinished(res);
+      res.on('data', d => {
+        st.write(d, () => {
+          const written = st.bytesWritten;
 
-        log(fullFilename, dest, written, total, d, isFinished);
+          bar.update(written / total);
+          const isFinished = onFinished.isFinished(res);
+
+          log(fullFilename, dest, written, total, d, isFinished);
+        });
       });
-    });
 
-    onFinished(res, (err, res) => {
-      return new Promise((resolve, reject) => {
-        const downloaded = statSync(resolve(dest, fullFilename)).size;
+      onFinished(res, (err, res) => {
+        const downloaded = statSync(path.resolve(dest, fullFilename)).size;
 
         if (!downloaded || (total && (downloaded < total))) {
-          return reject(DownloadError('The download failed! ', err));
+          return reject(new DownloadError('The download failed! ', err));
         } else {
           return resolve({ fullFilename, destination: dest });
         }
-      });
+      })
+    }).on('error', e => {
+      throw e;
     })
-  }).on('error', e => {
-    throw e;
   })
 }
 
