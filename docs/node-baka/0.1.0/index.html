@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DownloadError.html">DownloadError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProtocolError.html">ProtocolError</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkDestination">checkDestination</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkFilename">checkFilename</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkProtocol">checkProtocol</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#eta">eta</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#format">format</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getExtension">getExtension</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#logToStdout">logToStdout</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#round">round</a></span></li>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>node-baka</h1><p>A simple CLI tool with some utilities</p>
+<h1>Usage</h1><h2><code>node-baka --help, -h</code></h2><p>Show available commands.</p>
+<h2><code>node-baka get|g &lt;url&gt; [options]</code></h2><p>Download a file from the web.</p>
+<p><strong>NOTE:</strong> </p>
+<ul>
+<li>The <code>url</code> <strong>must</strong> point directly to the file you want to download, e.g. <code>https://www.(...)/cat.jpg</code></li>
+<li>It should start with either <code>http://</code> or <code>https://</code></li>
+</ul>
+<h3>Options:</h3><h4><code>-d, --destination &lt;destination&gt;</code></h4><p>Where to store the file. Defaults to the current directory.</p>
+<p><strong>NOTE:</strong> </p>
+<ul>
+<li>Prefer Unix-style paths even if you're on Windows, e.g. <code>~/pics/</code></li>
+<li>If the directory doesn't exist, it will be created automatically. Also works for subdirectories.</li>
+</ul>
+<h4><code>-f, --filename &lt;filename&gt;</code></h4><p>Name of the file to be downloaded. Defaults to &quot;file&quot;.</p>
+<p><strong>NOTE:</strong> If you don't specify the file extension, node-baka will try to guess based on the <code>url</code>. You should avoid omitting it.</p>
+<h1>Installation</h1><p><code>npm install -g node-baka</code></p>
+<h1>Local build</h1><ul>
+<li>Clone the repo: <code>git clone https://github.com/diego-c/node-baka.git</code></li>
+<li>Move to the repo's directory: <code>cd node-baka</code></li>
+<li>Install packages: <code>npm install or yarn install</code></li>
+</ul>
+<h2>Run</h2><ul>
+<li>With Node: <code>npm start [command] [options]</code> or <code>yarn start [command] [options]</code></li>
+<li>As an executable script: <code>./index.js [command] [options]</code></li>
+</ul>
+<h2>Test</h2><p>To run all tests: <code>npm test or yarn test</code></p>
+<h1>Contributing</h1><p>Issues and PRs are welcome. Please write accompanying tests with your PRs if have the time.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 07 2018 18:02:28 GMT-0300 (E. South America Standard Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
