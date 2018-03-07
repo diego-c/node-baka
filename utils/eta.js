@@ -14,7 +14,10 @@ const eta = (connectionSpeed, remaining) => {
  * @returns { string } Returns the formatted time
  */
 function format(secondsRemaining) {
-    return new Date(null, null, null, null, null, secondsRemaining).toString().match(/\d{2}:\d{2}:\d{2}/)[0];
+    const formattedArr = new Date(null, null, null, null, null, secondsRemaining).toString()
+        .match(/\d{2}:\d{2}:\d{2}/);
+
+    return formattedArr ? formattedArr[0] : '00:00:00';
 }
 
 module.exports = eta;
