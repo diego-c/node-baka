@@ -5,7 +5,8 @@ const ProgressBar = require('ascii-progress'),
   checkDest = require('../utils/checkDestination'),
   checkFilename = require('../utils/checkFilename'),
   checkProtocol = require('../utils/checkProtocol'),
-  log = require('../utils/logToStdout');
+  log = require('../utils/logToStdout'),
+  DownloadError = require('../errors/DownloadError');
 
 module.exports = function (url, filename, dest) {
   return new Promise((resolve, reject) => {
@@ -52,11 +53,4 @@ module.exports = function (url, filename, dest) {
     .catch(err => {
       console.log(err);
     })
-}
-
-class DownloadError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'DownloadError';
-  }
 }
