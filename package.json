@@ -1,6 +1,6 @@
 {
   "name": "node-baka",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A simple CLI tool with some utilities",
   "keywords": [
     "cli",
@@ -28,7 +28,6 @@
     "url": "https://github.com/diego-c/node-baka/"
   },
   "dependencies": {
-    "ascii-progress": "^1.0.5",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.5",
     "commander": "^2.14.1",

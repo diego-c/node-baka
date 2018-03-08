@@ -7,6 +7,7 @@ const speed = require('speedometer')()
 
 /**
  * Updates the current status of the file transfer to stdout
+ * @param { Gauge } bar The progress bar to be updated
  * @param { Widgets.BoxElement } box The BoxElement to be updated
  * @param { Widgets.Screen } screen The Screen to be rendered
  * @param { string } fullFilename The name of the file to be downloaded in the format file._extension_
@@ -19,7 +20,7 @@ const speed = require('speedometer')()
  * 
  */
 
-const updateUI = (box, screen, fullFilename, destination, written, total, data, isFinished) => {
+const updateUI = (bar, box, screen, fullFilename, destination, written, total, data, isFinished) => {
 
     const downloaded =
         Number.isNaN(round(written / 1000000, 2)) ?
@@ -38,7 +39,10 @@ const updateUI = (box, screen, fullFilename, destination, written, total, data, 
 
         , estimated = eta(connectionSpeed, remaining);
 
-    box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + fullFilename + '{/green-fg}' + ' to {magenta-fg}' + destination + '{/}\n\n' + '{center}Speed: {blue-fg} ' + connectionSpeed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
+    box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + fullFilename + '{/green-fg}' + ' to {magenta-fg}' + destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + connectionSpeed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
+
+    const totalInMB = round((total / 1000000), 2)
+    bar.setPercent((100 * downloaded) / totalInMB);
 
     screen.render();
 }
@@ -68,18 +72,26 @@ const buildUI = (fullFilename, destination, total) => {
         screen
     });
 
-    const box = grid.set(0, 0, 12, 12, blessed.box,
+    const bar = grid.set(8, 0, 4, 12, contrib.gauge, {
+        tags: true,
+        label: '{bold}{#eae54f-fg}Progress{/}',
+        percent: 0,
+        stroke: 'green',
+        fill: 'black'
+    })
+    const box = grid.set(0, 0, 8, 12, blessed.box,
         {
             tags: true,
-            content: '{center}{red-fg}Downloading ' + '{magenta-fg}' + fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + destination + '{/}\n\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + '{center}Downloaded: {blue-fg}0 MB{/}\n' + 'Remaining: {blue-fg}' + (total / 1000000) + ' MB{/}'
+            content: '{center}{red-fg}Downloading ' + '{magenta-fg}' + fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + '{center}Downloaded: {blue-fg}0 MB{/}\n' + 'Remaining: {blue-fg}' + (total / 1000000) + ' MB{/}'
         });
 
     screen.key(['escape', 'q'], (ch, key) => {
         return process.exit(0);
     });
 
+    bar.setPercent(0);
     screen.render();
-    return { box, screen };
+    return { bar, box, screen };
 }
 
 module.exports = {

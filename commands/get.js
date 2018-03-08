@@ -1,5 +1,4 @@
-const ProgressBar = require('ascii-progress')
-  , { createWriteStream, statSync } = require('fs')
+const { createWriteStream, statSync } = require('fs')
   , blessed = require('blessed')
   , contrib = require('blessed-contrib')
   , path = require('path')
@@ -30,14 +29,13 @@ const get = (url, filename = 'file', dest = __dirname) => {
       const st = createWriteStream(path.resolve(dest, fullFilename))
         , total = res.headers['content-length'];
 
-      const { box, screen } = buildUI(fullFilename, dest, total);
+      const { bar, box, screen } = buildUI(fullFilename, dest, total);
 
       res.on('data', d => {
         st.write(d, () => {
           const written = st.bytesWritten;
-          //bar.update(written / total);
           const isFinished = onFinished.isFinished(res);
-          updateUI(box, screen, fullFilename, dest, written, total, d, isFinished);
+          updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished);
         });
       });
 
