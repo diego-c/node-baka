@@ -1,6 +1,6 @@
 {
   "name": "node-baka",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple CLI tool with some utilities",
   "keywords": [
     "cli",
@@ -29,12 +29,14 @@
   },
   "dependencies": {
     "ascii-progress": "^1.0.5",
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.5",
     "commander": "^2.14.1",
     "on-finished": "^2.3.0",
-    "single-line-log": "^1.1.2",
     "speedometer": "^1.0.0"
   },
   "devDependencies": {
+    "@types/blessed": "^0.1.10",
     "@types/jest": "^22.2.0",
     "jest": "^22.4.2",
     "minami": "^1.2.3"
