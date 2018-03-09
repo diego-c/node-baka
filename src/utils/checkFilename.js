@@ -6,11 +6,11 @@
  * @param { string } url The URL to guess the file extension
  * @returns { string } Returns either the original filename (if it already contains a file extension) or the filename._extension_
  */
-var checkFilename = function (filename, url) {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = (function (filename, url) {
     var fullFilename = filename;
     if (!/\..+/.test(filename)) {
         fullFilename = '' + filename + require('./getExtension')(url);
     }
     return fullFilename;
-};
-module.exports = checkFilename;
+});

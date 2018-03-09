@@ -8,7 +8,7 @@ class ProtocolError extends Error {
      * Instatiates a ProtocolError to be thrown
      * @param { string } message Message to be displayed when the error is thrown
      */
-    constructor(message) {
+    constructor(message: string) {
         super(message);
         this.name = 'ProtocolError';
     }

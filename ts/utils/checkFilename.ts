@@ -6,12 +6,10 @@
  * @returns { string } Returns either the original filename (if it already contains a file extension) or the filename._extension_
  */
 
-const checkFilename = (filename: string, url: string) => {
+export default (filename: string, url: string): string => {
     let fullFilename = filename;
     if (!/\..+/.test(filename)) {
         fullFilename = '' + filename + require('./getExtension')(url)
     }
     return fullFilename;
 }
-
-module.exports = checkFilename;

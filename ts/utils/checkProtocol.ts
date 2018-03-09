@@ -7,13 +7,11 @@ const ProtocolError = require('../errors/ProtocolError');
  * 
  */
 
-const checkProtocol = (url: string) => {
+export default async (url: string): Promise<any> => {
     if (!(/^https?\:\/\/./.test(url))) {
         throw new ProtocolError('The url must use either the http or the https protocol');
     } else if (/^https:\/\/./.test(url)) {
-        return require('https');
+        return await import('https');
     }
-    return require('http');
+    return await import('http');
 }
-
-module.exports = checkProtocol;
