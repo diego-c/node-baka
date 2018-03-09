@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc --watch",
     "start": "node index",
     "test": "jest",
     "generate-docs": "jsdoc . --configure jsdoc.config.json --verbose"

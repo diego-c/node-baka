@@ -4,7 +4,7 @@ const program = require('commander'),
     get = require('./commands/get');
 
 program
-    .version('0.0.1', '-v, --version')
+    .version('0.1.2', '-v, --version')
     .description('Download files from the web');
 
 program
