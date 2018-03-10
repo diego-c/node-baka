@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var round_1 = require("../utils/round");
-var getSpeed_1 = require("../utils/getSpeed");
-var eta_1 = require("../utils/eta");
-var updateUI = function (status, fullFilename, destination, written, data, total, isFinished) {
-    var box = status.box;
-    var bar = status.bar;
-    var screen = status.screen;
-    var downloaded = round_1.round(written / 1000000, 2);
-    var totalInMB = round_1.round(total / 1000000, 2);
-    var remaining = round_1.round(totalInMB - downloaded, 2);
-    var connectionSpeed = round_1.round(getSpeed_1.getSpeed(data.length) / 1000, 2);
-    var estimated;
+const round_1 = require("../utils/round");
+const getSpeed_1 = require("../utils/getSpeed");
+const eta_1 = require("../utils/eta");
+const updateUI = (status, fullFilename, destination, written, data, total, isFinished) => {
+    const box = status.box;
+    const bar = status.bar;
+    const screen = status.screen;
+    const downloaded = round_1.round(written / 1000000, 2);
+    const totalInMB = round_1.round(total / 1000000, 2);
+    const remaining = round_1.round(totalInMB - downloaded, 2);
+    const connectionSpeed = round_1.round(getSpeed_1.getSpeed(data.length) / 1000, 2);
+    let estimated;
     estimated = eta_1.eta(connectionSpeed, remaining);
     box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + fullFilename + '{/green-fg}' + ' to {magenta-fg}' + destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + connectionSpeed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + '{center}Total: {blue-fg}' + totalInMB + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
     bar.setPercent(100 * downloaded / totalInMB);

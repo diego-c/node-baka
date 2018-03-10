@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param { number } remaining The remaining data to be transferred (in MB)
  * @returns { string } Returns the ETA in the format HH : MM : SS
  */
-var eta = function (connectionSpeed, remaining) {
+const eta = (connectionSpeed, remaining) => {
     return format(remaining * 1000 / connectionSpeed);
 };
 exports.eta = eta;
@@ -16,7 +16,7 @@ exports.eta = eta;
  * @returns { string } Returns the formatted time
  */
 function format(secondsRemaining) {
-    var formattedArr = new Date(0, 0, 0, 0, 0, secondsRemaining).toString()
+    const formattedArr = new Date(0, 0, 0, 0, 0, secondsRemaining).toString()
         .match(/\d{2}:\d{2}:\d{2}/);
     return formattedArr ? formattedArr[0] : '00:00:00';
 }

@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#__extends">__extends</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#buildUI">buildUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkDestination">checkDestination</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkProtocol">checkProtocol</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#eta">eta</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#format">format</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getExtension">getExtension</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#UI">UI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateUI">updateUI</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DownloadError.html">DownloadError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProtocolError.html">ProtocolError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="UI.html">UI</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="UIError.html">UIError</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#buildUI">buildUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkDestination">checkDestination</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkProtocol">checkProtocol</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#eta">eta</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#format">format</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getExtension">getExtension</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateUI">updateUI</a></span></li>
 </nav>
 
 <div id="main">
@@ -44,17 +44,17 @@ var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
     return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var blessed_1 = __importDefault(require("blessed"));
+const blessed_1 = __importDefault(require("blessed"));
 /**
  * Base class to be extended for different types of UI
  */
-var UI = /** @class */ (function () {
+class UI {
     /**
      * @param { string } _fullFilename The filename in the format filename._extension_
      * @param { string } _destination The path to store the file
      * @param { number } _total The total amount of bytes of the file to be transferred
      */
-    function UI(fullFilename, destination, total) {
+    constructor(fullFilename, destination, total) {
         this._screen = blessed_1.default.screen({
             smartCSR: true
         });
@@ -62,36 +62,19 @@ var UI = /** @class */ (function () {
         this._destination = destination;
         this._total = total;
     }
-    Object.defineProperty(UI.prototype, "screen", {
-        get: function () {
-            return this._screen;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UI.prototype, "fullFilename", {
-        get: function () {
-            return this._fullFilename;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UI.prototype, "destination", {
-        get: function () {
-            return this._destination;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UI.prototype, "total", {
-        get: function () {
-            return this._total;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return UI;
-}());
+    get screen() {
+        return this._screen;
+    }
+    get fullFilename() {
+        return this._fullFilename;
+    }
+    get destination() {
+        return this._destination;
+    }
+    get total() {
+        return this._total;
+    }
+}
 exports.UI = UI;
 </code></pre>
         </article>
@@ -105,7 +88,7 @@ exports.UI = UI;
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Mar 10 2018 19:09:00 GMT-0300 (E. South America Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Mar 10 2018 19:47:38 GMT-0300 (E. South America Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
