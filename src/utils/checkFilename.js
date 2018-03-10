@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Checks if the provided filename contains a file extension
  * If it doesn't, tries to guess the extension from the provided URL and appends it to the filename
@@ -5,13 +6,12 @@
  * @param { string } url The URL to guess the file extension
  * @returns { string } Returns either the original filename (if it already contains a file extension) or the filename._extension_
  */
-
-const checkFilename = (filename, url) => {
-    let fullFilename = filename;
+Object.defineProperty(exports, "__esModule", { value: true });
+var checkFilename = function (filename, url) {
+    var fullFilename = filename;
     if (!/\..+/.test(filename)) {
-        fullFilename = '' + filename + require('./getExtension')(url)
+        fullFilename = '' + filename + require('./getExtension')(url);
     }
     return fullFilename;
-}
-
-module.exports = checkFilename;
+};
+exports.checkFilename = checkFilename;

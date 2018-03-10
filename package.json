@@ -8,21 +8,22 @@
     "utilities",
     "commander"
   ],
-  "main": "index.js",
+  "main": "./src/index.js",
   "author": {
     "name": "diego-c",
     "url": "https://github.com/diego-c"
   },
   "license": "MIT",
   "scripts": {
-    "start": "node index",
+    "build": "cd ts/ && tsc --watch",
+    "start": "node ./src/index",
     "test": "jest",
     "generate-docs": "jsdoc . --configure jsdoc.config.json --verbose"
   },
   "bugs": {
     "url": "https://github.com/diego-c/node-baka/issues"
   },
-  "bin": "./index.js",
+  "bin": "./src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/diego-c/node-baka/"
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@types/blessed": "^0.1.10",
     "@types/jest": "^22.2.0",
+    "@types/node": "^9.4.7",
     "jest": "^22.4.2",
     "minami": "^1.2.3"
   }

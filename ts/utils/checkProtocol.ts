@@ -1,3 +1,6 @@
+import * as http from 'http';
+import * as https from 'https';
+
 const ProtocolError = require('../errors/ProtocolError');
 
 /**
@@ -7,13 +10,13 @@ const ProtocolError = require('../errors/ProtocolError');
  * 
  */
 
-const checkProtocol = url => {
+const checkProtocol = (url: string): any => {
     if (!(/^https?\:\/\/./.test(url))) {
         throw new ProtocolError('The url must use either the http or the https protocol');
     } else if (/^https:\/\/./.test(url)) {
-        return require('https');
+        return https;
     }
-    return require('http');
+    return http;
 }
 
-module.exports = checkProtocol;
+export { checkProtocol };

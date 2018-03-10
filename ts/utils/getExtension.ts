@@ -4,7 +4,7 @@
  * @returns { string } The guessed file extension in the format .<extension> 
  */
 
-const getExtension = url => {
+const getExtension = (url: string): string => {
     const urlArr = url.split('.');
     return '.' + urlArr[urlArr.length - 1];
 }

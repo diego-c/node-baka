@@ -5,9 +5,9 @@
  * @returns { number } The rounded number
  */
 
-const round = (num, precision) => {
+const round = (num: number, precision: number): number => {
     const factor = Math.pow(10, precision);
     return Math.round(num * factor) / factor;
 }
 
-module.exports = round;
+export { round };

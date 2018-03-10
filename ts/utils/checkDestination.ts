@@ -1,4 +1,4 @@
-const { existsSync, mkdirSync } = require('fs');
+import { existsSync, mkdirSync } from 'fs';
 
 /**
  * Checks a destination path
@@ -7,7 +7,7 @@ const { existsSync, mkdirSync } = require('fs');
  * @returns { void } 
  */
 
-const checkDestination = dest => {
+const checkDestination = (dest: string) => {
     const destinations = dest.split('/');
     let currDest = destinations[0];
 
@@ -19,4 +19,4 @@ const checkDestination = dest => {
     })
 }
 
-module.exports = checkDestination;
+export { checkDestination };
