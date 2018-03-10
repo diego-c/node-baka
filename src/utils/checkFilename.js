@@ -7,10 +7,10 @@
  * @returns { string } Returns either the original filename (if it already contains a file extension) or the filename._extension_
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (function (filename, url) {
-    var fullFilename = filename;
+exports.default = (filename, url) => {
+    let fullFilename = filename;
     if (!/\..+/.test(filename)) {
         fullFilename = '' + filename + require('./getExtension')(url);
     }
     return fullFilename;
-});
+};

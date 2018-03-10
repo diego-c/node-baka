@@ -61,4 +61,4 @@ const get = (url: string, filename = 'file', dest = __dirname) => {
     })
 }
 
-module.exports = get;
+export { get };
