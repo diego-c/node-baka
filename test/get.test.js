@@ -1,10 +1,10 @@
-const get = require('../commands/get'),
+const get = require('../src/commands/get').get,
     { resolve } = require('path'),
     url = 'https://www.petmd.com/sites/default/files/petmd-cat-happy-10.jpg',
     wrongURL = 'wrong url',
     resourceNotFound = 'https://www.petmd.com/sites/default/files/wrongPath/petmd-cat-happy-10.jpg',
-    ProtocolError = require('../errors/ProtocolError'),
-    DownloadError = require('../errors/DownloadError');
+    ProtocolError = require('../src/errors/ProtocolError'),
+    DownloadError = require('../src/errors/DownloadError');
 
 describe('get <url> command', () => {
     it('downloads cat.jpg to the same directory as the "get" function', () => {
@@ -14,7 +14,7 @@ describe('get <url> command', () => {
             .then(data => expect(data)
                 .toEqual({
                     fullFilename: 'cat.jpg',
-                    destination: resolve(__dirname, '../commands')
+                    destination: resolve(__dirname, '../src/commands')
                 }));
     });
 
