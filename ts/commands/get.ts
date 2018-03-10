@@ -1,16 +1,15 @@
+import { createWriteStream, statSync } from 'fs';
+import blessed from 'blessed';
+import contrib from 'blessed-contrib';
+import * as path from 'path';
+import onFinished from 'on-finished';
+import { checkDestination } from '../utils/checkDestination';
 import { ServerResponse, IncomingMessage } from "http";
-
-const { createWriteStream, statSync } = require('fs')
-  , blessed = require('blessed')
-  , contrib = require('blessed-contrib')
-  , path = require('path')
-  , onFinished = require('on-finished')
-  , checkDest = require('../utils/checkDestination')
-  , checkFilename: (filename: string, url: string) => (string) = require('../utils/checkFilename')
-  , checkProtocol: (url: string) => any = require('../utils/checkProtocol')
-  , updateUI = require('../utils/UI').updateUI
-  , buildUI = require('../utils/UI').buildUI
-  , DownloadError = require('../errors/DownloadError');
+import { DownloadUI } from '../UI/DownloadUI';
+import { Status } from "../UI/Status";
+import { checkFilename } from '../utils/checkFilename';
+import { checkProtocol } from '../utils/checkProtocol';
+import { DownloadError } from '../errors/DownloadError';
 
 /**
  * Download a resource from the web
@@ -22,22 +21,25 @@ const get = (url: string, filename = 'file', dest = __dirname) => {
 
   return new Promise((resolve, reject) => {
 
-    checkDest(dest);
+    checkDestination(dest);
     const fullFilename = checkFilename(filename, url);
-    const protocol = checkProtocol(url);
+    const protocol: any = checkProtocol(url);
 
     protocol.get(url, (res: IncomingMessage) => {
 
       const st = createWriteStream(path.resolve(dest, fullFilename))
-        , total = res.headers['content-length'];
+      const total: number = Number(res.headers['content-length']);
 
-      const { bar, box, screen } = buildUI(fullFilename, dest, total);
+      //const { bar, box, screen } = buildUI(fullFilename, dest, total);
+      const UI: DownloadUI = new DownloadUI(fullFilename, dest, total);
+      const status: Status = UI.buildUI()
 
       res.on('data', d => {
         st.write(d, () => {
           const written = st.bytesWritten;
           const isFinished = onFinished.isFinished(res);
-          updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished);
+          UI.updateUI(status, written, d, isFinished);
+          //updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished);
         });
       });
 
@@ -45,9 +47,9 @@ const get = (url: string, filename = 'file', dest = __dirname) => {
         const downloaded = statSync(path.resolve(dest, fullFilename)).size;
 
         if (!downloaded || (total && (downloaded < total))) {
-          box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}')
-          screen.render();
-          return reject(new DownloadError('The download failed! ', err));
+          status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}')
+          status.screen.render();
+          return reject(new DownloadError('The download failed! ' + err));
         } else {
           return resolve({ fullFilename, destination: dest });
         }

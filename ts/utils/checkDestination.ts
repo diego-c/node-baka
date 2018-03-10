@@ -19,4 +19,4 @@ const checkDestination = (dest: string) => {
     })
 }
 
-module.exports = checkDestination;
+export { checkDestination };

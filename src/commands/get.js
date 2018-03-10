@@ -1,6 +1,23 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const { createWriteStream, statSync } = require('fs'), blessed = require('blessed'), contrib = require('blessed-contrib'), path = require('path'), onFinished = require('on-finished'), checkDest = require('../utils/checkDestination'), checkFilename = require('../utils/checkFilename'), checkProtocol = require('../utils/checkProtocol'), updateUI = require('../utils/UI').updateUI, buildUI = require('../utils/UI').buildUI, DownloadError = require('../errors/DownloadError');
+const fs_1 = require("fs");
+const path = __importStar(require("path"));
+const on_finished_1 = __importDefault(require("on-finished"));
+const checkDestination_1 = require("../utils/checkDestination");
+const DownloadUI_1 = require("../UI/DownloadUI");
+const checkFilename_1 = require("../utils/checkFilename");
+const checkProtocol_1 = require("../utils/checkProtocol");
+const DownloadError_1 = require("../errors/DownloadError");
 /**
  * Download a resource from the web
  * @param { string } url URL of the resource to be downloaded
@@ -9,25 +26,29 @@ const { createWriteStream, statSync } = require('fs'), blessed = require('blesse
  */
 const get = (url, filename = 'file', dest = __dirname) => {
     return new Promise((resolve, reject) => {
-        checkDest(dest);
-        const fullFilename = checkFilename(filename, url);
-        const protocol = checkProtocol(url);
+        checkDestination_1.checkDestination(dest);
+        const fullFilename = checkFilename_1.checkFilename(filename, url);
+        const protocol = checkProtocol_1.checkProtocol(url);
         protocol.get(url, (res) => {
-            const st = createWriteStream(path.resolve(dest, fullFilename)), total = res.headers['content-length'];
-            const { bar, box, screen } = buildUI(fullFilename, dest, total);
+            const st = fs_1.createWriteStream(path.resolve(dest, fullFilename));
+            const total = Number(res.headers['content-length']);
+            //const { bar, box, screen } = buildUI(fullFilename, dest, total);
+            const UI = new DownloadUI_1.DownloadUI(fullFilename, dest, total);
+            const status = UI.buildUI();
             res.on('data', d => {
                 st.write(d, () => {
                     const written = st.bytesWritten;
-                    const isFinished = onFinished.isFinished(res);
-                    updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished);
+                    const isFinished = on_finished_1.default.isFinished(res);
+                    UI.updateUI(status, written, d, isFinished);
+                    //updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished);
                 });
             });
-            onFinished(res, (err, res) => {
-                const downloaded = statSync(path.resolve(dest, fullFilename)).size;
+            on_finished_1.default(res, (err, res) => {
+                const downloaded = fs_1.statSync(path.resolve(dest, fullFilename)).size;
                 if (!downloaded || (total && (downloaded < total))) {
-                    box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}');
-                    screen.render();
-                    return reject(new DownloadError('The download failed! ', err));
+                    status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}');
+                    status.screen.render();
+                    return reject(new DownloadError_1.DownloadError('The download failed! ' + err));
                 }
                 else {
                     return resolve({ fullFilename, destination: dest });

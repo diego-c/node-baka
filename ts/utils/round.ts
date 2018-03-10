@@ -10,4 +10,4 @@ const round = (num: number, precision: number): number => {
     return Math.round(num * factor) / factor;
 }
 
-module.exports = round;
+export { round };

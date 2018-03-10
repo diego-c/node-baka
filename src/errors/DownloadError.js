@@ -3,6 +3,7 @@
  * Error to be thrown if the download is unsuccessful
  * @extends Error
 */
+Object.defineProperty(exports, "__esModule", { value: true });
 class DownloadError extends Error {
     /**
      * Instatiates a DownloadError to be thrown
@@ -13,4 +14,4 @@ class DownloadError extends Error {
         this.name = 'DownloadError';
     }
 }
-module.exports = DownloadError;
+exports.DownloadError = DownloadError;

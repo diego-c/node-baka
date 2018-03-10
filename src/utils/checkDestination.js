@@ -17,4 +17,4 @@ const checkDestination = (dest) => {
         }
     });
 };
-module.exports = checkDestination;
+exports.checkDestination = checkDestination;
