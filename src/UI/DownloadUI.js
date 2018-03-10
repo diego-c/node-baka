@@ -7,7 +7,7 @@ const UI_1 = require("./UI");
 const blessed_1 = __importDefault(require("blessed"));
 const blessed_contrib_1 = __importDefault(require("blessed-contrib"));
 const round_1 = require("../utils/round");
-const speedometer_1 = __importDefault(require("speedometer"));
+const getSpeed_1 = require("../utils/getSpeed");
 class DownloadUI extends UI_1.UI {
     constructor(fullFilename, destination, total) {
         super(fullFilename, destination, total);
@@ -49,9 +49,13 @@ class DownloadUI extends UI_1.UI {
         const remaining = Number.isNaN(round_1.round((this.total - written) / 1000000, 2)) ?
             'Unknown' :
             round_1.round((this.total - written) / 1000000, 2);
-        const connectionSpeed = Number.isNaN(round_1.round(speedometer_1.default(data.length ? data.length : data) / 1000, 2)) ?
-            'Unknown' :
-            round_1.round(speedometer_1.default(data.length) / 1000, 2);
+        // TODO: make connectionSpeed more performant. 
+        // The way it is right now, the UI doesn't even show up.
+        const connectionSpeed = round_1.round(getSpeed_1.getSpeed(data.length) / 1000, 2);
+        /* const connectionSpeed: (number | string) =
+            Number.isNaN(round(speed(data.length) / 1000, 2)) ?
+                'Unknown' :
+                round(speed(data.length) / 1000, 2) */
         let estimated;
         if (typeof connectionSpeed === 'string' || typeof remaining === 'string') {
             estimated = 'Unknown';

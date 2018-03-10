@@ -3,7 +3,7 @@ import { Status } from "./Status";
 import blessed, { Widgets } from "blessed";
 import contrib, { Widgets as ContribWidgets } from 'blessed-contrib';
 import { round } from "../utils/round";
-import speed from 'speedometer';
+import { getSpeed } from '../utils/getSpeed';
 
 class DownloadUI extends UI {
 
@@ -58,12 +58,16 @@ class DownloadUI extends UI {
         const remaining: (number | string) =
             Number.isNaN(round((this.total - written) / 1000000, 2)) ?
                 'Unknown' :
-                round((this.total - written) / 1000000, 2)
+                round((this.total - written) / 1000000, 2);
 
-        const connectionSpeed: (number | string) =
-            Number.isNaN(round(speed(data.length ? data.length : data) / 1000, 2)) ?
+        // TODO: make connectionSpeed more performant. 
+        // The way it is right now, the UI doesn't even show up.
+        const connectionSpeed: number = round(getSpeed(data.length) / 1000, 2);
+
+        /* const connectionSpeed: (number | string) =
+            Number.isNaN(round(speed(data.length) / 1000, 2)) ?
                 'Unknown' :
-                round(speed(data.length) / 1000, 2)
+                round(speed(data.length) / 1000, 2) */
 
         let estimated: string;
 
