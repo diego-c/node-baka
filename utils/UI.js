@@ -42,7 +42,7 @@ const updateUI = (bar, box, screen, fullFilename, destination, written, total, d
     box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + fullFilename + '{/green-fg}' + ' to {magenta-fg}' + destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + connectionSpeed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
 
     const totalInMB = round((total / 1000000), 2)
-    bar.setPercent((100 * downloaded) / totalInMB);
+    bar.setPercent(downloaded < 1 ? (downloaded / totalInMB) : ((100 * downloaded) / totalInMB));
 
     screen.render();
 }
