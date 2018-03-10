@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>errors/ProtocolError.js - Documentation</title>
+    <title>errors/UIError.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">errors/ProtocolError.js</h1>
+    <h1 class="page-title">errors/UIError.js</h1>
     
 
     
@@ -41,7 +41,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use strict";
 /**
- * Error to be thrown if the provided protocol is incorrect
+ * Error to be thrown if the UI can't be properly rendered
  * @extends Error
 */
 var __extends = (this &amp;&amp; this.__extends) || (function () {
@@ -54,20 +54,21 @@ var __extends = (this &amp;&amp; this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var ProtocolError = /** @class */ (function (_super) {
-    __extends(ProtocolError, _super);
+Object.defineProperty(exports, "__esModule", { value: true });
+var UIError = /** @class */ (function (_super) {
+    __extends(UIError, _super);
     /**
-     * Instatiates a ProtocolError to be thrown
+     * Instatiates an UIError to be thrown
      * @param { string } message Message to be displayed when the error is thrown
      */
-    function ProtocolError(message) {
+    function UIError(message) {
         var _this = _super.call(this, message) || this;
-        _this.name = 'ProtocolError';
+        _this.name = 'UIError';
         return _this;
     }
-    return ProtocolError;
+    return UIError;
 }(Error));
-module.exports = ProtocolError;
+exports.UIError = UIError;
 </code></pre>
         </article>
     </section>

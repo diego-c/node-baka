@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>errors/ProtocolError.js - Documentation</title>
+    <title>UI/UI.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">errors/ProtocolError.js</h1>
+    <h1 class="page-title">UI/UI.js</h1>
     
 
     
@@ -40,34 +40,59 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>"use strict";
+var __importDefault = (this &amp;&amp; this.__importDefault) || function (mod) {
+    return (mod &amp;&amp; mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var blessed_1 = __importDefault(require("blessed"));
 /**
- * Error to be thrown if the provided protocol is incorrect
- * @extends Error
-*/
-var __extends = (this &amp;&amp; this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array &amp;&amp; function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var ProtocolError = /** @class */ (function (_super) {
-    __extends(ProtocolError, _super);
+ * Base class to be extended for different types of UI
+ */
+var UI = /** @class */ (function () {
     /**
-     * Instatiates a ProtocolError to be thrown
-     * @param { string } message Message to be displayed when the error is thrown
+     * @param { string } _fullFilename The filename in the format filename._extension_
+     * @param { string } _destination The path to store the file
+     * @param { number } _total The total amount of bytes of the file to be transferred
      */
-    function ProtocolError(message) {
-        var _this = _super.call(this, message) || this;
-        _this.name = 'ProtocolError';
-        return _this;
+    function UI(fullFilename, destination, total) {
+        this._screen = blessed_1.default.screen({
+            smartCSR: true
+        });
+        this._fullFilename = fullFilename;
+        this._destination = destination;
+        this._total = total;
     }
-    return ProtocolError;
-}(Error));
-module.exports = ProtocolError;
+    Object.defineProperty(UI.prototype, "screen", {
+        get: function () {
+            return this._screen;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UI.prototype, "fullFilename", {
+        get: function () {
+            return this._fullFilename;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UI.prototype, "destination", {
+        get: function () {
+            return this._destination;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UI.prototype, "total", {
+        get: function () {
+            return this._total;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return UI;
+}());
+exports.UI = UI;
 </code></pre>
         </article>
     </section>

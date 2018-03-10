@@ -20,4 +20,4 @@ function format(secondsRemaining: number): string {
     return formattedArr ? formattedArr[0] : '00:00:00';
 }
 
-module.exports = eta;
+export { eta };

@@ -1,6 +1,6 @@
 "use strict";
 /**
- * Error to be thrown if the download is unsuccessful
+ * Error to be thrown if the UI can't be properly rendered
  * @extends Error
 */
 var __extends = (this && this.__extends) || (function () {
@@ -14,17 +14,17 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var DownloadError = /** @class */ (function (_super) {
-    __extends(DownloadError, _super);
+var UIError = /** @class */ (function (_super) {
+    __extends(UIError, _super);
     /**
-     * Instatiates a DownloadError to be thrown
+     * Instatiates an UIError to be thrown
      * @param { string } message Message to be displayed when the error is thrown
      */
-    function DownloadError(message) {
+    function UIError(message) {
         var _this = _super.call(this, message) || this;
-        _this.name = 'DownloadError';
+        _this.name = 'UIError';
         return _this;
     }
-    return DownloadError;
+    return UIError;
 }(Error));
-exports.DownloadError = DownloadError;
+exports.UIError = UIError;

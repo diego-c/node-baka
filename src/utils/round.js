@@ -6,8 +6,8 @@
  * @returns { number } The rounded number
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-const round = (num, precision) => {
-    const factor = Math.pow(10, precision);
+var round = function (num, precision) {
+    var factor = Math.pow(10, precision);
     return Math.round(num * factor) / factor;
 };
 exports.round = round;

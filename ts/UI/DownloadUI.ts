@@ -4,11 +4,19 @@ import blessed, { Widgets } from "blessed";
 import contrib, { Widgets as ContribWidgets } from 'blessed-contrib';
 import { round } from "../utils/round";
 import { getSpeed } from '../utils/getSpeed';
+import { eta } from "../utils/eta";
 
 class DownloadUI extends UI {
 
+    private _getSpeed: Function;
+
     constructor(fullFilename: string, destination: string, total: number) {
         super(fullFilename, destination, total);
+        this._getSpeed = getSpeed;
+    }
+
+    get speed(): Function {
+        return this._getSpeed;
     }
 
     buildUI(barOptions?: ContribWidgets.GaugeOptions, boxOptions?: Widgets.BoxOptions): Status {
@@ -51,18 +59,14 @@ class DownloadUI extends UI {
 
     updateUI(status: Status, written: number, data: (Buffer | string), isFinished: boolean): void {
 
-        const downloaded: (number | string) = Number.isNaN(round(written / 1000000, 2)) ?
-            'Unknown' :
-            round(written / 1000000, 2);
+        const downloaded: (number | string) = Number.isNaN(written) ? 'Unknown' : round(written / 1000000, 2);
 
-        const remaining: (number | string) =
-            Number.isNaN(round((this.total - written) / 1000000, 2)) ?
-                'Unknown' :
-                round((this.total - written) / 1000000, 2);
+        const remaining: number = round((this.total - written) / 1000000, 2);
 
         // TODO: make connectionSpeed more performant. 
         // The way it is right now, the UI doesn't even show up.
-        const connectionSpeed: number = round(getSpeed(data.length) / 1000, 2);
+        //const connectionSpeed: number = round(this.speed(data.length) / 1000, 2);
+        const connectionSpeed: string = 'Unknown';
 
         /* const connectionSpeed: (number | string) =
             Number.isNaN(round(speed(data.length) / 1000, 2)) ?
