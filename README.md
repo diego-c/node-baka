@@ -47,11 +47,11 @@ __NOTE:__ If you don't specify the file extension, node-baka will try to guess b
 ## Run
 
 - With Node: `npm start [command] [options]` or `yarn start [command] [options]`
-- As an executable script: `./index.js [command] [options]`
+- As an executable script: `./src/index.js [command] [options]`
 
 ## Test
 
-To run all tests: `npm test or yarn test`
+To run all tests: `npm test` or `yarn test`
 
 # API
 
