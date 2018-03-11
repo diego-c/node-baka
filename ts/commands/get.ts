@@ -15,6 +15,7 @@ import { buildUI } from '../UI/buildUI';
 import { updateUI } from '../UI/updateUI'; */
 import { buildUI, updateUI } from '../utils/UI';
 import { IncomingMessage } from 'http';
+import { DownloadUI } from '../UI/DownloadUI';
 
 /**
  * Download a resource from the web
@@ -36,30 +37,39 @@ const get = (url: string, filename = 'file', dest = __dirname) => {
       const total: number = Number(res.headers['content-length']);
 
       let bar: ContribWidgets.GaugeElement, box: Widgets.BoxElement, screen: Widgets.Screen;
+
+      // test with DownloadUI instance
+      /*  try {
+         let status: Status = buildUI(fullFilename, dest, total);
+         bar = status.bar;
+         box = status.box;
+         screen = status.screen;
+       } catch (err) {
+         throw new UIError('Sorry, the UI could not be rendered!');
+       } */
+      const UI: DownloadUI = new DownloadUI(fullFilename, dest, total);
+
+      let status: Status;
       try {
-        let status: Status = buildUI(fullFilename, dest, total);
-        bar = status.bar;
-        box = status.box;
-        screen = status.screen;
+        status = UI.buildUI();
       } catch (err) {
         throw new UIError('Sorry, the UI could not be rendered!');
       }
       //const { bar, box, screen } = buildUI(fullFilename, dest, total)
       //const status: Status = buildUI(fullFilename, dest, total);
-      /* const UI: DownloadUI = new DownloadUI(fullFilename, dest, total);
+      /* 
       const status: Status = UI.buildUI() */
 
       res.on('data', d => {
         st.write(d, () => {
           const written = st.bytesWritten;
           const isFinished = onFinished.isFinished(res);
-          //UI.updateUI(status, written, d, isFinished);
-          //updateUI(status, fullFilename, dest, written, d, total, isFinished);
-          try {
-            updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished)
-          } catch (err) {
-            throw new UIError('Sorry, the UI could not be updated!');
-          }
+
+          /*  try {
+             updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished)
+           } catch (err) {
+             throw new UIError('Sorry, the UI could not be updated!');
+           } */
         });
       });
 

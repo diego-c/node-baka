@@ -34,18 +34,19 @@ class DownloadUI extends UI {
         if (!boxOptions) {
             boxOptions = {
                 tags: true,
-                content: '{center}{red-fg}Downloading ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + '{center}Downloaded: {blue-fg}0 MB{/}\n' + 'Remaining: {blue-fg}' + (this.total / 1000000) + ' MB{/}'
+                content: '{center}{red-fg}Downloading ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + '{center}Downloaded: {blue-fg}0 MB{/}\n' + 'Remaining: {blue-fg}' + round(this.total / 1000000, 2) + ' MB{/}'
             }
         }
 
-        const grid: ContribWidgets.GridElement = new contrib.grid({
+        const grid = new contrib.grid({
             rows: 12,
             cols: 12,
             screen: this.screen
         });
 
-        const bar: ContribWidgets.GaugeElement = grid.set(8, 0, 4, 12, contrib.gauge, barOptions);
-        const box: Widgets.BoxElement = grid.set(0, 0, 8, 12, blessed.box, boxOptions);
+        const bar = grid.set(8, 0, 4, 12, contrib.gauge, barOptions);
+
+        const box = grid.set(0, 0, 8, 12, blessed.box, boxOptions);
 
         this.screen.key(['escape', 'q'], (ch, key) => {
             return process.exit(0);
@@ -53,7 +54,6 @@ class DownloadUI extends UI {
 
         bar.setPercent(0);
         this.screen.render();
-
         return { bar, box, screen: this.screen };
     }
 

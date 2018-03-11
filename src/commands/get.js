@@ -18,10 +18,7 @@ const checkFilename_1 = require("../utils/checkFilename");
 const checkProtocol_1 = require("../utils/checkProtocol");
 const DownloadError_1 = require("../errors/DownloadError");
 const UIError_1 = require("../errors/UIError");
-/* import { DownloadUI } from '../UI/DownloadUI';
-import { buildUI } from '../UI/buildUI';
-import { updateUI } from '../UI/updateUI'; */
-const UI_1 = require("../utils/UI");
+const DownloadUI_1 = require("../UI/DownloadUI");
 /**
  * Download a resource from the web
  * @param { string } url URL of the resource to be downloaded
@@ -37,31 +34,36 @@ const get = (url, filename = 'file', dest = __dirname) => {
             const st = fs_1.createWriteStream(path.resolve(dest, fullFilename));
             const total = Number(res.headers['content-length']);
             let bar, box, screen;
+            // test with DownloadUI instance
+            /*  try {
+               let status: Status = buildUI(fullFilename, dest, total);
+               bar = status.bar;
+               box = status.box;
+               screen = status.screen;
+             } catch (err) {
+               throw new UIError('Sorry, the UI could not be rendered!');
+             } */
+            const UI = new DownloadUI_1.DownloadUI(fullFilename, dest, total);
+            let status;
             try {
-                let status = UI_1.buildUI(fullFilename, dest, total);
-                bar = status.bar;
-                box = status.box;
-                screen = status.screen;
+                status = UI.buildUI();
             }
             catch (err) {
                 throw new UIError_1.UIError('Sorry, the UI could not be rendered!');
             }
             //const { bar, box, screen } = buildUI(fullFilename, dest, total)
             //const status: Status = buildUI(fullFilename, dest, total);
-            /* const UI: DownloadUI = new DownloadUI(fullFilename, dest, total);
+            /*
             const status: Status = UI.buildUI() */
             res.on('data', d => {
                 st.write(d, () => {
                     const written = st.bytesWritten;
                     const isFinished = on_finished_1.default.isFinished(res);
-                    //UI.updateUI(status, written, d, isFinished);
-                    //updateUI(status, fullFilename, dest, written, d, total, isFinished);
-                    try {
-                        UI_1.updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished);
-                    }
-                    catch (err) {
-                        throw new UIError_1.UIError('Sorry, the UI could not be updated!');
-                    }
+                    /*  try {
+                       updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished)
+                     } catch (err) {
+                       throw new UIError('Sorry, the UI could not be updated!');
+                     } */
                 });
             });
             on_finished_1.default(res, (err, res) => {
