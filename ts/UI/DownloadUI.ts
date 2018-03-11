@@ -57,45 +57,45 @@ class DownloadUI extends UI {
         return { bar, box, screen: this.screen };
     }
 
-    updateUI(status: Status, written: number, data: (Buffer | string), isFinished: boolean): void {
+    updateUI(status: Status, written: number, data: (Buffer | string), isFinished: boolean) {
 
-        const downloaded: (number | string) = Number.isNaN(written) ? 'Unknown' : round(written / 1000000, 2);
+        let downloaded: (string | number), remaining: (string | number), totalInMB: number = round(this.total / 1000000, 2);
 
-        const remaining: number = round((this.total - written) / 1000000, 2);
+        if (Number.isNaN(written)) {
+            downloaded = 'Unknown';
+            remaining = 'Unknown';
+        } else {
+            downloaded = round((written / 1000000), 2);
+            remaining = round((this.total - written) / 1000000, 2);
+        }
 
-        // TODO: make connectionSpeed more performant. 
-        // The way it is right now, the UI doesn't even show up.
-        //const connectionSpeed: number = round(this.speed(data.length) / 1000, 2);
-        const connectionSpeed: string = 'Unknown';
-
-        /* const connectionSpeed: (number | string) =
-            Number.isNaN(round(speed(data.length) / 1000, 2)) ?
-                'Unknown' :
-                round(speed(data.length) / 1000, 2) */
+        let speed: (number | string);
+        if (data.length) {
+            speed = round(getSpeed(data.length / 1000), 2);
+        } else {
+            speed = 'Unknown';
+        }
 
         let estimated: string;
 
-        if (typeof connectionSpeed === 'string' || typeof remaining === 'string') {
-            estimated = 'Unknown';
+        if ((typeof remaining === 'number') && (typeof speed === 'number')) {
+            estimated = eta(speed, remaining);
         } else {
-            estimated = eta(connectionSpeed, remaining);
+            estimated = 'Unknown';
         }
 
-        const box: Widgets.BoxElement = status.box;
-        const bar: ContribWidgets.GaugeElement = status.bar;
-        const screen: Widgets.Screen = status.screen;
+        status.box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + speed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
 
-        box.setContent(
-            '{center}{red-fg}Downloading ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + connectionSpeed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''
-            ));
-
-        const totalInMB: number = round((this.total / 1000000), 2);
-
+        // TODO: fix bar % when going from 0 MB to the total / 100 (MB)
+        let percent: number;
         if (typeof downloaded === 'number') {
-            bar.setPercent((100 * downloaded) / totalInMB);
+            percent = downloaded < (totalInMB / 100) ? round(downloaded / totalInMB, 2) : round(downloaded * 100 / totalInMB, 2);
+        } else {
+            percent = 0;
         }
+        status.bar.setPercent(percent);
 
-        screen.render();
+        this.screen.render();
     }
 }
 

@@ -33,16 +33,6 @@ const get = (url, filename = 'file', dest = __dirname) => {
         protocol.get(url, (res) => {
             const st = fs_1.createWriteStream(path.resolve(dest, fullFilename));
             const total = Number(res.headers['content-length']);
-            let bar, box, screen;
-            // test with DownloadUI instance
-            /*  try {
-               let status: Status = buildUI(fullFilename, dest, total);
-               bar = status.bar;
-               box = status.box;
-               screen = status.screen;
-             } catch (err) {
-               throw new UIError('Sorry, the UI could not be rendered!');
-             } */
             const UI = new DownloadUI_1.DownloadUI(fullFilename, dest, total);
             let status;
             try {
@@ -51,26 +41,23 @@ const get = (url, filename = 'file', dest = __dirname) => {
             catch (err) {
                 throw new UIError_1.UIError('Sorry, the UI could not be rendered!');
             }
-            //const { bar, box, screen } = buildUI(fullFilename, dest, total)
-            //const status: Status = buildUI(fullFilename, dest, total);
-            /*
-            const status: Status = UI.buildUI() */
             res.on('data', d => {
                 st.write(d, () => {
                     const written = st.bytesWritten;
                     const isFinished = on_finished_1.default.isFinished(res);
-                    /*  try {
-                       updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished)
-                     } catch (err) {
-                       throw new UIError('Sorry, the UI could not be updated!');
-                     } */
+                    try {
+                        UI.updateUI(status, written, d, isFinished);
+                    }
+                    catch (err) {
+                        throw new UIError_1.UIError('Sorry, the UI could not be updated!');
+                    }
                 });
             });
             on_finished_1.default(res, (err, res) => {
                 const downloaded = fs_1.statSync(path.resolve(dest, fullFilename)).size;
                 if (!downloaded || (total && (downloaded < total))) {
-                    box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}');
-                    screen.render();
+                    status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}');
+                    status.screen.render();
                     return reject(new DownloadError_1.DownloadError('The download failed! ' + err));
                 }
                 else {

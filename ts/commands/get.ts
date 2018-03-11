@@ -10,10 +10,6 @@ import { checkFilename } from '../utils/checkFilename';
 import { checkProtocol } from '../utils/checkProtocol';
 import { DownloadError } from '../errors/DownloadError';
 import { UIError } from '../errors/UIError';
-/* import { DownloadUI } from '../UI/DownloadUI';
-import { buildUI } from '../UI/buildUI';
-import { updateUI } from '../UI/updateUI'; */
-import { buildUI, updateUI } from '../utils/UI';
 import { IncomingMessage } from 'http';
 import { DownloadUI } from '../UI/DownloadUI';
 
@@ -36,17 +32,6 @@ const get = (url: string, filename = 'file', dest = __dirname) => {
       const st = createWriteStream(path.resolve(dest, fullFilename))
       const total: number = Number(res.headers['content-length']);
 
-      let bar: ContribWidgets.GaugeElement, box: Widgets.BoxElement, screen: Widgets.Screen;
-
-      // test with DownloadUI instance
-      /*  try {
-         let status: Status = buildUI(fullFilename, dest, total);
-         bar = status.bar;
-         box = status.box;
-         screen = status.screen;
-       } catch (err) {
-         throw new UIError('Sorry, the UI could not be rendered!');
-       } */
       const UI: DownloadUI = new DownloadUI(fullFilename, dest, total);
 
       let status: Status;
@@ -55,21 +40,17 @@ const get = (url: string, filename = 'file', dest = __dirname) => {
       } catch (err) {
         throw new UIError('Sorry, the UI could not be rendered!');
       }
-      //const { bar, box, screen } = buildUI(fullFilename, dest, total)
-      //const status: Status = buildUI(fullFilename, dest, total);
-      /* 
-      const status: Status = UI.buildUI() */
 
       res.on('data', d => {
         st.write(d, () => {
           const written = st.bytesWritten;
           const isFinished = onFinished.isFinished(res);
 
-          /*  try {
-             updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished)
-           } catch (err) {
-             throw new UIError('Sorry, the UI could not be updated!');
-           } */
+          try {
+            UI.updateUI(status, written, d, isFinished);
+          } catch (err) {
+            throw new UIError('Sorry, the UI could not be updated!');
+          }
         });
       });
 
@@ -77,8 +58,8 @@ const get = (url: string, filename = 'file', dest = __dirname) => {
         const downloaded = statSync(path.resolve(dest, fullFilename)).size;
 
         if (!downloaded || (total && (downloaded < total))) {
-          box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}')
-          screen.render();
+          status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}')
+          status.screen.render();
           return reject(new DownloadError('The download failed! ' + err));
         } else {
           return resolve({ fullFilename, destination: dest });

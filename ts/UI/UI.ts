@@ -1,5 +1,4 @@
-import blessed, { Widgets, widget } from 'blessed'
-import { IViewable } from './IViewable';
+import blessed, { Widgets, widget } from 'blessed';
 import { Status } from './Status';
 import { Widgets as ContribWidgets } from 'blessed-contrib';
 

@@ -48,32 +48,40 @@ class DownloadUI extends UI_1.UI {
         return { bar, box, screen: this.screen };
     }
     updateUI(status, written, data, isFinished) {
-        const downloaded = Number.isNaN(written) ? 'Unknown' : round_1.round(written / 1000000, 2);
-        const remaining = round_1.round((this.total - written) / 1000000, 2);
-        // TODO: make connectionSpeed more performant. 
-        // The way it is right now, the UI doesn't even show up.
-        //const connectionSpeed: number = round(this.speed(data.length) / 1000, 2);
-        const connectionSpeed = 'Unknown';
-        /* const connectionSpeed: (number | string) =
-            Number.isNaN(round(speed(data.length) / 1000, 2)) ?
-                'Unknown' :
-                round(speed(data.length) / 1000, 2) */
-        let estimated;
-        if (typeof connectionSpeed === 'string' || typeof remaining === 'string') {
-            estimated = 'Unknown';
+        let downloaded, remaining, totalInMB = round_1.round(this.total / 1000000, 2);
+        if (Number.isNaN(written)) {
+            downloaded = 'Unknown';
+            remaining = 'Unknown';
         }
         else {
-            estimated = eta_1.eta(connectionSpeed, remaining);
+            downloaded = round_1.round((written / 1000000), 2);
+            remaining = round_1.round((this.total - written) / 1000000, 2);
         }
-        const box = status.box;
-        const bar = status.bar;
-        const screen = status.screen;
-        box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + connectionSpeed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
-        const totalInMB = round_1.round((this.total / 1000000), 2);
+        let speed;
+        if (data.length) {
+            speed = round_1.round(getSpeed_1.getSpeed(data.length / 1000), 2);
+        }
+        else {
+            speed = 'Unknown';
+        }
+        let estimated;
+        if ((typeof remaining === 'number') && (typeof speed === 'number')) {
+            estimated = eta_1.eta(speed, remaining);
+        }
+        else {
+            estimated = 'Unknown';
+        }
+        status.box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + speed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
+        // TODO: fix bar % when going from 0 MB to the total / 100 (MB)
+        let percent;
         if (typeof downloaded === 'number') {
-            bar.setPercent((100 * downloaded) / totalInMB);
+            percent = downloaded < (totalInMB / 100) ? round_1.round(downloaded / totalInMB, 2) : round_1.round(downloaded * 100 / totalInMB, 2);
         }
-        screen.render();
+        else {
+            percent = 0;
+        }
+        status.bar.setPercent(percent);
+        this.screen.render();
     }
 }
 exports.DownloadUI = DownloadUI;
