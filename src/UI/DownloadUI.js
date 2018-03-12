@@ -15,11 +15,11 @@ const eta_1 = require("../utils/eta");
  */
 class DownloadUI extends UI_1.UI {
     /**
-      * Instantiate a new DownloadUI
-      * @param { string } fullFilename The filename in the format filename._extension_
-      * @param { string } destination The path to store the file
-      * @param { number } total The total amount of bytes of the file to be transferred
-      */
+     * Instantiate a new DownloadUI
+     * @param { string } fullFilename The filename in the format filename._extension_
+     * @param { string } destination The path to store the file
+     * @param { number } total The total amount of bytes of the file to be transferred
+     */
     constructor(fullFilename, destination, total) {
         super(fullFilename, destination, total);
         this._getSpeed = getSpeed_1.getSpeed;
@@ -32,11 +32,11 @@ class DownloadUI extends UI_1.UI {
         return this._getSpeed;
     }
     /**
-    * DownloadUI implementation of buildUI
-    * @param { ContribWidgets.GaugeOptions | null } barOptions Options for the gauge progress bar to be displayed in the UI
-    * @param { Widgets.BoxOptions | null } boxOptions Options for the text box to be displayed in the UI
-    * @returns { Status } The current Status of the rendered elements
-    */
+       * DownloadUI implementation of buildUI
+       * @param { ContribWidgets.GaugeOptions | null } barOptions Options for the gauge progress bar to be displayed in the UI
+       * @param { Widgets.BoxOptions | null } boxOptions Options for the text box to be displayed in the UI
+       * @returns { Status } The current Status of the rendered elements
+       */
     buildUI(barOptions, boxOptions) {
         if (!barOptions) {
             barOptions = {
@@ -68,13 +68,13 @@ class DownloadUI extends UI_1.UI {
         return { bar, box, screen: this.screen };
     }
     /**
-     * DownloadUI implementation of updateUI
-     * @param { Status } status The current status object to be updated
-     * @param { number } written The amount of bytes written to the file
-     * @param { Buffer | string } data The amount of bytes transferred
-     * @param { boolean } isFinished Check if the download has finished
-     * @returns { void }
-     */
+    * DownloadUI implementation of updateUI
+    * @param { Status } status The current status object to be updated
+    * @param { number } written The amount of bytes written to the file
+    * @param { Buffer | string } data The amount of bytes transferred
+    * @param { boolean } isFinished Check if the download has finished
+    * @returns { void }
+    */
     updateUI(status, written, data, isFinished) {
         let downloaded, remaining, totalInMB = round_1.round(this.total / 1000000, 2);
         if (Number.isNaN(written)) {
