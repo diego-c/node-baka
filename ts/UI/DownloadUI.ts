@@ -6,18 +6,40 @@ import { round } from "../utils/round";
 import { getSpeed } from '../utils/getSpeed';
 import { eta } from "../utils/eta";
 
+/**
+ * Class to generate UIs for downloading files
+ * @extends UI
+ */
 class DownloadUI extends UI {
+
 
     private _getSpeed: Function;
 
+    /**
+      * Instantiate a new DownloadUI  
+      * @param { string } fullFilename The filename in the format filename._extension_ 
+      * @param { string } destination The path to store the file
+      * @param { number } total The total amount of bytes of the file to be transferred
+      */
     constructor(fullFilename: string, destination: string, total: number) {
         super(fullFilename, destination, total);
         this._getSpeed = getSpeed;
     }
 
+    /**
+     * Getter for the speed connection function
+     * @returns { Function }
+     */
     get speed(): Function {
         return this._getSpeed;
     }
+
+    /**
+    * DownloadUI implementation of buildUI 
+    * @param { ContribWidgets.GaugeOptions | null } barOptions Options for the gauge progress bar to be displayed in the UI
+    * @param { Widgets.BoxOptions | null } boxOptions Options for the text box to be displayed in the UI
+    * @returns { Status } The current Status of the rendered elements 
+    */
 
     buildUI(barOptions?: ContribWidgets.GaugeOptions, boxOptions?: Widgets.BoxOptions): Status {
 
@@ -56,6 +78,15 @@ class DownloadUI extends UI {
         this.screen.render();
         return { bar, box, screen: this.screen };
     }
+
+    /**
+     * DownloadUI implementation of updateUI
+     * @param { Status } status The current status object to be updated 
+     * @param { number } written The amount of bytes written to the file 
+     * @param { Buffer | string } data The amount of bytes transferred  
+     * @param { boolean } isFinished Check if the download has finished
+     * @returns { void } 
+     */
 
     updateUI(status: Status, written: number, data: (Buffer | string), isFinished: boolean) {
 

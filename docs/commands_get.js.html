@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DownloadError.html">DownloadError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProtocolError.html">ProtocolError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="UI.html">UI</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="UIError.html">UIError</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#buildUI">buildUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkDestination">checkDestination</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkProtocol">checkProtocol</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#eta">eta</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#format">format</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getExtension">getExtension</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateUI">updateUI</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DownloadError.html">DownloadError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DownloadUI.html">DownloadUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DownloadUI.html#buildUI">buildUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DownloadUI.html#buildUI">buildUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DownloadUI.html#updateUI">updateUI</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="DownloadUI.html#updateUI">updateUI</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProtocolError.html">ProtocolError</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="UI.html">UI</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="UIError.html">UIError</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkDestination">checkDestination</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#checkProtocol">checkProtocol</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#eta">eta</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#format">format</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getExtension">getExtension</a></span></li>
 </nav>
 
 <div id="main">
@@ -59,10 +59,7 @@ const checkFilename_1 = require("../utils/checkFilename");
 const checkProtocol_1 = require("../utils/checkProtocol");
 const DownloadError_1 = require("../errors/DownloadError");
 const UIError_1 = require("../errors/UIError");
-/* import { DownloadUI } from '../UI/DownloadUI';
-import { buildUI } from '../UI/buildUI';
-import { updateUI } from '../UI/updateUI'; */
-const UI_1 = require("../utils/UI");
+const DownloadUI_1 = require("../UI/DownloadUI");
 /**
  * Download a resource from the web
  * @param { string } url URL of the resource to be downloaded
@@ -77,28 +74,20 @@ const get = (url, filename = 'file', dest = __dirname) => {
         protocol.get(url, (res) => {
             const st = fs_1.createWriteStream(path.resolve(dest, fullFilename));
             const total = Number(res.headers['content-length']);
-            let bar, box, screen;
+            const UI = new DownloadUI_1.DownloadUI(fullFilename, dest, total);
+            let status;
             try {
-                let status = UI_1.buildUI(fullFilename, dest, total);
-                bar = status.bar;
-                box = status.box;
-                screen = status.screen;
+                status = UI.buildUI();
             }
             catch (err) {
                 throw new UIError_1.UIError('Sorry, the UI could not be rendered!');
             }
-            //const { bar, box, screen } = buildUI(fullFilename, dest, total)
-            //const status: Status = buildUI(fullFilename, dest, total);
-            /* const UI: DownloadUI = new DownloadUI(fullFilename, dest, total);
-            const status: Status = UI.buildUI() */
             res.on('data', d => {
                 st.write(d, () => {
                     const written = st.bytesWritten;
                     const isFinished = on_finished_1.default.isFinished(res);
-                    //UI.updateUI(status, written, d, isFinished);
-                    //updateUI(status, fullFilename, dest, written, d, total, isFinished);
                     try {
-                        UI_1.updateUI(bar, box, screen, fullFilename, dest, written, total, d, isFinished);
+                        UI.updateUI(status, written, d, isFinished);
                     }
                     catch (err) {
                         throw new UIError_1.UIError('Sorry, the UI could not be updated!');
@@ -108,8 +97,8 @@ const get = (url, filename = 'file', dest = __dirname) => {
             on_finished_1.default(res, (err, res) => {
                 const downloaded = fs_1.statSync(path.resolve(dest, fullFilename)).size;
                 if (!downloaded || (total &amp;&amp; (downloaded &lt; total))) {
-                    box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}');
-                    screen.render();
+                    status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}');
+                    status.screen.render();
                     return reject(new DownloadError_1.DownloadError('The download failed! ' + err));
                 }
                 else {
@@ -137,7 +126,7 @@ exports.get = get;
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Mar 10 2018 19:47:38 GMT-0300 (E. South America Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 11 2018 21:22:14 GMT-0300 (E. South America Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

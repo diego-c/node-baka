@@ -9,9 +9,10 @@ const blessed_1 = __importDefault(require("blessed"));
  */
 class UI {
     /**
-     * @param { string } _fullFilename The filename in the format filename._extension_
-     * @param { string } _destination The path to store the file
-     * @param { number } _total The total amount of bytes of the file to be transferred
+     * Base constructor to be extended for UIs
+     * @param { string } fullFilename The filename in the format filename._extension_
+     * @param { string } destination The path to store the file
+     * @param { number } total The total amount of bytes of the file to be transferred
      */
     constructor(fullFilename, destination, total) {
         this._screen = blessed_1.default.screen({
@@ -21,15 +22,31 @@ class UI {
         this._destination = destination;
         this._total = total;
     }
+    /**
+     * Getter for screen
+     * @returns { Widgets.Screen }
+     */
     get screen() {
         return this._screen;
     }
+    /**
+     * Getter for fullFilename
+     * @returns { string }
+     */
     get fullFilename() {
         return this._fullFilename;
     }
+    /**
+     * Getter for destination
+     * @returns { string }
+     */
     get destination() {
         return this._destination;
     }
+    /**
+     * Getter for the total amount of bytes
+     * @returns { number }
+     */
     get total() {
         return this._total;
     }

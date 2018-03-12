@@ -22,14 +22,24 @@ abstract class UI {
      */
 
     abstract buildUI(barOptions?: ContribWidgets.GaugeOptions, boxOptions?: Widgets.BoxOptions): Status;
+
+    /**
+     * Updates the UI information
+     * @param { Status } status The current status object to be updated 
+     * @param { number } written The amount of bytes written to the file 
+     * @param { Buffer | string } data The amount of bytes transferred  
+     * @param { boolean } isFinished Check if the download has finished
+     * @returns { void } 
+     */
     abstract updateUI(status: Status, written: number, data: (Buffer | string), isFinished: boolean): void;
 
     /** 
-     * @param { string } _fullFilename The filename in the format filename._extension_ 
-     * @param { string } _destination The path to store the file
-     * @param { number } _total The total amount of bytes of the file to be transferred
+     * Base constructor to be extended for UIs
+     * @param { string } fullFilename The filename in the format filename._extension_ 
+     * @param { string } destination The path to store the file
+     * @param { number } total The total amount of bytes of the file to be transferred
      */
-    constructor(fullFilename: string, destination: string, total: number) {
+    protected constructor(fullFilename: string, destination: string, total: number) {
         this._screen = blessed.screen({
             smartCSR: true
         });
@@ -38,17 +48,35 @@ abstract class UI {
         this._total = total;
     }
 
+    /**
+     * Getter for screen
+     * @returns { Widgets.Screen }
+     */
     get screen(): Widgets.Screen {
         return this._screen;
     }
 
+    /**
+     * Getter for fullFilename
+     * @returns { string }
+     */
     get fullFilename(): string {
         return this._fullFilename;
     }
 
+    /**
+     * Getter for destination
+     * @returns { string }
+     */
+
     get destination(): string {
         return this._destination;
     }
+
+    /**
+     * Getter for the total amount of bytes
+     * @returns { number }
+     */
 
     get total(): number {
         return this._total;
