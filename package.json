@@ -18,7 +18,7 @@
     "build": "cd ts/ && tsc --watch",
     "start": "node ./src/index",
     "test": "jest",
-    "generate-docs": "jsdoc . --configure jsdoc.config.json --verbose"
+    "generate-docs": "typedoc ./ts --exclude node_modules --ignoreCompilerErrors --target ES6 --out ./docs"
   },
   "bugs": {
     "url": "https://github.com/diego-c/node-baka/issues"
