@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>node-baka</title>
+	<title>Status | node-baka</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">node-baka</a>
+					<a href="../index.html" class="title">node-baka</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -53,116 +53,164 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_ui_status_.html">&quot;UI/Status&quot;</a>
+				</li>
+				<li>
+					<a href="_ui_status_.status.html">Status</a>
 				</li>
 			</ul>
-			<h1> node-baka</h1>
+			<h1>Interface Status</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<h1 id="node-baka">node-baka</h1>
-				<p>A simple CLI tool with some utilities</p>
-				<h1 id="usage">Usage</h1>
-				<h2 id="node-baka-help-h"><code>node-baka --help, -h</code></h2>
-				<p>Show available commands.</p>
-				<h2 id="node-baka-get-g-url-options-"><code>node-baka get|g &lt;url&gt; [options]</code></h2>
-				<p>Download a file from the web.</p>
-				<p><strong>NOTE:</strong> </p>
-				<ul>
-					<li>The <code>url</code> <strong>must</strong> point directly to the file you want to download, e.g. <code>https://www.(...)/cat.jpg</code></li>
-					<li>It should start with either <code>http://</code> or <code>https://</code></li>
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Defines the shape of status objects</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>interface</dt>
+						<dd><p>Status</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Status</span>
+					</li>
 				</ul>
-				<h3 id="options-">Options:</h3>
-				<h4 id="-d-destination-destination"><code>-d, --destination &lt;destination&gt;</code></h4>
-				<p>Where to store the file. Defaults to the current directory.</p>
-				<p><strong>NOTE:</strong> </p>
-				<ul>
-					<li>Prefer Unix-style paths even if you&#39;re on Windows, e.g. <code>~/pics/</code></li>
-					<li>If the directory doesn&#39;t exist, it will be created automatically. Also works for subdirectories.</li>
-				</ul>
-				<h4 id="-f-filename-filename"><code>-f, --filename &lt;filename&gt;</code></h4>
-				<p>Name of the file to be downloaded. Defaults to &quot;file&quot;.</p>
-				<p><strong>NOTE:</strong> If you don&#39;t specify the file extension, node-baka will try to guess based on the <code>url</code>. You should avoid omitting it.</p>
-				<h1 id="installation">Installation</h1>
-				<p><code>npm install -g node-baka</code></p>
-				<h1 id="local-build">Local build</h1>
-				<ul>
-					<li>Clone the repo: <code>git clone https://github.com/diego-c/node-baka.git</code></li>
-					<li>Move to the repo&#39;s directory: <code>cd node-baka</code></li>
-					<li>Install packages: <code>npm install or yarn install</code></li>
-				</ul>
-				<h2 id="run">Run</h2>
-				<ul>
-					<li>With Node: <code>npm start [command] [options]</code> or <code>yarn start [command] [options]</code></li>
-					<li>As an executable script: <code>./src/index.js [command] [options]</code></li>
-				</ul>
-				<h2 id="test">Test</h2>
-				<p>To run all tests: <code>npm test</code> or <code>yarn test</code></p>
-				<h1 id="api">API</h1>
-				<p>Check the documentation at <a href="https://diego-c.github.io/node-baka/" title="node-baka documentation">node-baka docs</a></p>
-				<h1 id="contributing">Contributing</h1>
-				<p>Issues and PRs are welcome. Please write accompanying tests with your PRs if have the time.</p>
-			</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_ui_status_.status.html#bar" class="tsd-kind-icon">bar</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_ui_status_.status.html#box" class="tsd-kind-icon">box</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_ui_status_.status.html#screen" class="tsd-kind-icon">screen</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="bar" class="tsd-anchor"></a>
+					<h3>bar</h3>
+					<div class="tsd-signature tsd-kind-icon">bar<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ContribWidgets.GaugeElement</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/diego-c/node-baka/blob/0be3965/ts/UI/Status.ts#L9">UI/Status.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="box" class="tsd-anchor"></a>
+					<h3>box</h3>
+					<div class="tsd-signature tsd-kind-icon">box<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BoxElement</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/diego-c/node-baka/blob/0be3965/ts/UI/Status.ts#L10">UI/Status.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="screen" class="tsd-anchor"></a>
+					<h3>screen</h3>
+					<div class="tsd-signature tsd-kind-icon">screen<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Screen</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/diego-c/node-baka/blob/0be3965/ts/UI/Status.ts#L11">UI/Status.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_ui_downloadui_.html">"UI/<wbr>DownloadUI"</a>
+						<a href="../modules/_ui_downloadui_.html">"UI/<wbr>DownloadUI"</a>
+					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/_ui_status_.html">"UI/<wbr>Status"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_ui_status_.html">"UI/<wbr>Status"</a>
+						<a href="../modules/_ui_ui_.html">"UI/UI"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_ui_ui_.html">"UI/UI"</a>
+						<a href="../modules/_commands_get_.html">"commands/get"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_commands_get_.html">"commands/get"</a>
+						<a href="../modules/_errors_downloaderror_.html">"errors/<wbr>Download<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_errors_downloaderror_.html">"errors/<wbr>Download<wbr>Error"</a>
+						<a href="../modules/_errors_protocolerror_.html">"errors/<wbr>Protocol<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_errors_protocolerror_.html">"errors/<wbr>Protocol<wbr>Error"</a>
+						<a href="../modules/_errors_uierror_.html">"errors/UIError"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_errors_uierror_.html">"errors/UIError"</a>
+						<a href="../modules/_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_index_.html">"index"</a>
+						<a href="../modules/_utils_checkdestination_.html">"utils/check<wbr>Destination"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_checkdestination_.html">"utils/check<wbr>Destination"</a>
+						<a href="../modules/_utils_checkfilename_.html">"utils/check<wbr>Filename"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_checkfilename_.html">"utils/check<wbr>Filename"</a>
+						<a href="../modules/_utils_checkprotocol_.html">"utils/check<wbr>Protocol"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_checkprotocol_.html">"utils/check<wbr>Protocol"</a>
+						<a href="../modules/_utils_eta_.html">"utils/eta"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_eta_.html">"utils/eta"</a>
+						<a href="../modules/_utils_getextension_.html">"utils/get<wbr>Extension"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_getextension_.html">"utils/get<wbr>Extension"</a>
+						<a href="../modules/_utils_getspeed_.html">"utils/get<wbr>Speed"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_getspeed_.html">"utils/get<wbr>Speed"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_utils_round_.html">"utils/round"</a>
+						<a href="../modules/_utils_round_.html">"utils/round"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_ui_status_.status.html" class="tsd-kind-icon">Status</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_ui_status_.status.html#bar" class="tsd-kind-icon">bar</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_ui_status_.status.html#box" class="tsd-kind-icon">box</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_ui_status_.status.html#screen" class="tsd-kind-icon">screen</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>
@@ -231,7 +279,7 @@
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
