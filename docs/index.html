@@ -87,6 +87,19 @@
 				<h4 id="-f-filename-filename"><code>-f, --filename &lt;filename&gt;</code></h4>
 				<p>Name of the file to be downloaded. Defaults to &quot;file&quot;.</p>
 				<p><strong>NOTE:</strong> If you don&#39;t specify the file extension, node-baka will try to guess based on the <code>url</code>. You should avoid omitting it.</p>
+				<h2 id="node-baka-gzip-z-source-options-"><code>node-baka gzip|z &lt;source&gt; [options]</code></h2>
+				<p>Compress a local file.</p>
+				<p><strong>NOTE:</strong> </p>
+				<ul>
+					<li>The <code>source</code> path <strong>must</strong> point directly to the file you want to compress, e.g. <code>~/docs/file.txt</code></li>
+				</ul>
+				<h3 id="options-">Options:</h3>
+				<h4 id="-d-destination-destination"><code>-d, --destination &lt;destination&gt;</code></h4>
+				<p>Where to store the compressed file. Defaults to the current directory.</p>
+				<h4 id="-f-filename-filename"><code>-f, --filename &lt;filename&gt;</code></h4>
+				<p>Name of the compressed file. Defaults to <code>file._extension_</code>.</p>
+				<h4 id="-p-password-password"><code>-p, --password &lt;password&gt;</code></h4>
+				<p>Encrypt the compressed file with the given password.</p>
 				<h1 id="installation">Installation</h1>
 				<p><code>npm install -g node-baka</code></p>
 				<h1 id="local-build">Local build</h1>
@@ -118,6 +131,9 @@
 						<a href="modules/_ui_downloadui_.html">"UI/<wbr>DownloadUI"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_ui_gzipui_.html">"UI/<wbr>GzipUI"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_ui_status_.html">"UI/<wbr>Status"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -127,13 +143,25 @@
 						<a href="modules/_commands_get_.html">"commands/get"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_commands_gzip_.html">"commands/gzip"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_errors_downloaderror_.html">"errors/<wbr>Download<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_errors_fileerror_.html">"errors/<wbr>File<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_errors_protocolerror_.html">"errors/<wbr>Protocol<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_errors_readerror_.html">"errors/<wbr>Read<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_errors_uierror_.html">"errors/UIError"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_errors_writeerror_.html">"errors/<wbr>Write<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_index_.html">"index"</a>

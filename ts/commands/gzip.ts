@@ -11,7 +11,16 @@ import { ReadError } from '../errors/ReadError';
 import { FileError } from '../errors/FileError';
 import { createCipher } from 'crypto';
 
-const gzip = (source: string, filename: string = 'file', destination: string = __dirname, password?: string): Promise<Object | null> => {
+/**
+ * Compress a local file.
+ * @param { string } source The source file to be compressed
+ * @param { string } filename The name of the compressed file. Defaults to "file._extension_"
+ * @param { string } destination Where to store the compressed file. Defaults to the current directory
+ * @param { string | null } password Optional password to encrypt the compressed file
+ * @returns { Promise<Object | void> } Either resolves with an object containing fullFilename and destination of the compressed file or rejects with an error
+ */
+
+const gzip = (source: string, filename: string = 'file', destination: string = __dirname, password?: string): Promise<Object | void> => {
 
     return new Promise((resolve: Function, reject: Function) => {
 

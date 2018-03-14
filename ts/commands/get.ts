@@ -15,9 +15,9 @@ import { DownloadUI } from '../UI/DownloadUI';
  * @param { string } url URL of the resource to be downloaded
  * @param { string | null } filename Name of the file to be stored. Defaults to "file"
  * @param { string | null } dest Path to store the file. Defaults to the current directory.
- * @returns { Promise } Either resolves with an object containing fullFilename and destination or rejects with an error
+ * @returns { Promise<Object | void> } Either resolves with an object containing fullFilename and destination or rejects with an error
  */
-const get = (url: string, filename: string = 'file', dest: string = __dirname) => {
+const get = (url: string, filename: string = 'file', dest: string = __dirname): Promise<Object | void> => {
 
   return new Promise((resolve, reject) => {
 
