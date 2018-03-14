@@ -8,10 +8,26 @@ const blessed_contrib_1 = __importDefault(require("blessed-contrib"));
 const blessed_1 = __importDefault(require("blessed"));
 const round_1 = require("../utils/round");
 const eta_1 = require("../utils/eta");
+/**
+ * Class to generate UIs for compressing files
+ * @extends UI
+ */
 class GzipUI extends UI_1.UI {
+    /**
+     * Instantiate a new GzipUI
+     * @param { string } fullFilename The filename in the format filename._extension_
+     * @param { string } destination The path to store the compressed file
+     * @param { number } total The total amount of bytes of the source file
+     */
     constructor(fullFilename, destination, total) {
         super(fullFilename, destination, total);
     }
+    /**
+      * GzipUI implementation of buildUI
+      * @param { ContribWidgets.GaugeOptions | null } barOptions Options for the gauge progress bar to be displayed in the UI
+      * @param { Widgets.BoxOptions | null } boxOptions Options for the text box to be displayed in the UI
+      * @returns { Status } The current Status of the rendered elements
+      */
     buildUI(barOptions, boxOptions) {
         if (!barOptions) {
             barOptions = {
@@ -25,7 +41,7 @@ class GzipUI extends UI_1.UI {
         if (!boxOptions) {
             boxOptions = {
                 tags: true,
-                content: '{center}{red-fg}Compressing ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Written: {blue-fg}0 MB{/}\n' + '{center}Data length: {blue-fg}0 MB{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}'
+                content: '{center}{red-fg}Compressing ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Written: {blue-fg}0 MB{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}'
             };
         }
         const grid = new blessed_contrib_1.default.grid({
@@ -42,6 +58,14 @@ class GzipUI extends UI_1.UI {
         this.screen.render();
         return { bar, box, screen: this.screen };
     }
+    /**
+   * GzipUI implementation of updateUI
+   * @param { Status } status The current status object to be updated
+   * @param { number } written The amount of bytes written to the compressed file
+   * @param { Buffer | string } data The amount of bytes transferred
+   * @param { boolean } isFinished Check if the compression has finished
+   * @returns { void }
+   */
     updateUI(status, written, data, isFinished) {
         let bar = status.bar, box = status.box;
         const writtenMB = round_1.round(written / 1000000, 2);

@@ -17,7 +17,7 @@
   "scripts": {
     "build": "cd ts/ && tsc --watch",
     "start": "node ./src/index",
-    "test": "jest",
+    "test": "rm -rf zip-test && jest",
     "generate-docs": "typedoc ./ts --exclude node_modules --ignoreCompilerErrors --target ES6 --out ./docs"
   },
   "bugs": {

@@ -25,11 +25,11 @@ const gzip = (source: string, filename: string = 'file', destination: string = _
     return new Promise((resolve: Function, reject: Function) => {
 
         checkDestination(destination);
-        const fullFilename: string = checkFilename(filename, source);
+        const fullFilename: string = '' + checkFilename(filename, source) + '.gz';
 
         const sourceFile: ReadStream = createReadStream(source);
 
-        const compressedFile: WriteStream = createWriteStream(path.resolve(destination, fullFilename + '.gz'));
+        const compressedFile: WriteStream = createWriteStream(path.resolve(destination, fullFilename));
 
         let UI: GzipUI,
             status: Status,
@@ -59,6 +59,7 @@ const gzip = (source: string, filename: string = 'file', destination: string = _
                     .pipe(compressedFile)
                     .on('finish', () => {
                         UI.updateUI(status, written, currentChunk, true);
+                        return resolve({ fullFilename, destination });
                     })
                     .on('error', (err: Error) => {
                         return reject(new WriteError('Sorry, could not write data to the compressed file ' + err));
@@ -67,8 +68,6 @@ const gzip = (source: string, filename: string = 'file', destination: string = _
             .catch(err => {
                 return reject(new FileError('Could not open the source file! ' + err));
             })
-
-        return resolve({ fullFilename, destination });
     })
 }
 

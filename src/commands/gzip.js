@@ -14,12 +14,20 @@ const WriteError_1 = require("../errors/WriteError");
 const ReadError_1 = require("../errors/ReadError");
 const FileError_1 = require("../errors/FileError");
 const crypto_1 = require("crypto");
+/**
+ * Compress a local file.
+ * @param { string } source The source file to be compressed
+ * @param { string } filename The name of the compressed file. Defaults to "file._extension_"
+ * @param { string } destination Where to store the compressed file. Defaults to the current directory
+ * @param { string | null } password Optional password to encrypt the compressed file
+ * @returns { Promise<Object | void> } Either resolves with an object containing fullFilename and destination of the compressed file or rejects with an error
+ */
 const gzip = (source, filename = 'file', destination = __dirname, password) => {
     return new Promise((resolve, reject) => {
         checkDestination_1.checkDestination(destination);
-        const fullFilename = checkFilename_1.checkFilename(filename, source);
+        const fullFilename = '' + checkFilename_1.checkFilename(filename, source) + '.gz';
         const sourceFile = fs_1.createReadStream(source);
-        const compressedFile = fs_1.createWriteStream(path_1.default.resolve(destination, fullFilename + '.gz'));
+        const compressedFile = fs_1.createWriteStream(path_1.default.resolve(destination, fullFilename));
         let UI, status, written, currentChunk;
         gzip_size_1.default.file(source)
             .then(size => {
@@ -41,6 +49,7 @@ const gzip = (source, filename = 'file', destination = __dirname, password) => {
                 .pipe(compressedFile)
                 .on('finish', () => {
                 UI.updateUI(status, written, currentChunk, true);
+                return resolve({ fullFilename, destination });
             })
                 .on('error', (err) => {
                 return reject(new WriteError_1.WriteError('Sorry, could not write data to the compressed file ' + err));
@@ -49,7 +58,6 @@ const gzip = (source, filename = 'file', destination = __dirname, password) => {
             .catch(err => {
             return reject(new FileError_1.FileError('Could not open the source file! ' + err));
         });
-        return resolve({ fullFilename, destination });
     });
 };
 exports.gzip = gzip;
