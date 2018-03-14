@@ -1,3 +1,6 @@
+[![dependencies Status](https://david-dm.org/diego-c/node-baka/status.svg)](https://david-dm.org/diego-c/node-baka)
+[![devDependencies Status](https://david-dm.org/diego-c/node-baka/dev-status.svg)](https://david-dm.org/diego-c/node-baka?type=dev)
+
 # node-baka
 
 A simple CLI tool with some utilities
