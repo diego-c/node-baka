@@ -1,6 +1,6 @@
 const { gzip } = require('../src/commands/gzip'),
     path = require('path'),
-    { createWriteStream, createReadStream, mkdirSync, rmdirSync } = require('fs'),
+    { createWriteStream, mkdirSync } = require('fs'),
     destination = path.resolve(__dirname, '../zip-test');
 
 describe('gzip <source> command', () => {
@@ -17,11 +17,10 @@ describe('gzip <source> command', () => {
 
         txt.on('finish', () => {
             txt.close();
-            return resolve(txt);
         });
 
         txt.on('error', err => {
-            return reject(err);
+            console.error(err);
         });
 
         gzip(path.resolve(__dirname, '../zip-test/lorem.txt'), 'compressed-lorem', destination)
