@@ -51,7 +51,7 @@ const gzip = (source: string, filename: string = 'file', destination: string = _
                 return reject(new ReadError('Sorry, could not read the source file ' + err));
             })
             .pipe(compressedFile)
-            .on('finish', () => {
+            .once('finish', () => {
                 console.log('Finished!');
             })
             .on('error', (err: Error) => {

@@ -42,7 +42,7 @@ const gzip = (source, filename = 'file', destination = __dirname, password) => {
             return reject(new ReadError_1.ReadError('Sorry, could not read the source file ' + err));
         })
             .pipe(compressedFile)
-            .on('finish', () => {
+            .once('finish', () => {
             console.log('Finished!');
         })
             .on('error', (err) => {
