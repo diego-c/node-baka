@@ -56,6 +56,28 @@ Name of the compressed file. Defaults to `file._extension_`.
 
 Encrypt the compressed file with the given password.
 
+## `node-baka gunzip|u <source> [options]`
+
+Extract a local file.
+
+__NOTE:__ 
+
+- The `source` path __must__ point directly to the file you want to extract, e.g. `~/docs/file.txt.gz`
+
+### Options:
+
+#### `-d, --destination <destination>`
+
+Where to store the extracted file. Defaults to the current directory.
+
+#### `-f, --filename <filename>`
+
+Name of the extracted file. Defaults to `file._extension_`.
+
+#### `-p, --password <password>`
+
+Decrypt the compressed file with the given password.
+
 # Installation
 
 `npm install -g node-baka`
