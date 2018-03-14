@@ -9,7 +9,7 @@ const get_1 = require("./commands/get");
 const gzip_1 = require("./commands/gzip");
 const gunzip_1 = require("./commands/gunzip");
 commander_1.default
-    .version('0.2.1', '-v, --version')
+    .version('0.2.2', '-v, --version')
     .description('Some CLI utilities')
     .name('node-baka')
     .usage('[command] [options]');

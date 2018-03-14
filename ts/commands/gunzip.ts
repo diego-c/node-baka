@@ -26,8 +26,9 @@ const gunzip = (source: string, filename: string = 'file', destination: string =
         checkDestination(destination);
         let fullFilename: string;
 
-        if (source.match(/\.\w+/g)) {
-            fullFilename = '' + filename + source.match(/\.\w+/g)[0];
+        let matches: Array<string>;
+        if ((matches = source.match(/\.\w+/g)) !== null) {
+            fullFilename = /\.\w+/.test(filename) ? filename : ('' + filename + matches[matches.length - 2]);
         } else {
             fullFilename = filename;
         }

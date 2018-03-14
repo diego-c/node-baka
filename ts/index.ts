@@ -6,7 +6,7 @@ import { gzip } from './commands/gzip';
 import { gunzip } from './commands/gunzip';
 
 program
-    .version('0.2.1', '-v, --version')
+    .version('0.2.2', '-v, --version')
     .description('Some CLI utilities')
     .name('node-baka')
     .usage('[command] [options]')

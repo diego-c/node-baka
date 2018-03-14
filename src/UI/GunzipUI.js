@@ -41,7 +41,7 @@ class GunzipUI extends UI_1.UI {
         if (!boxOptions) {
             boxOptions = {
                 tags: true,
-                content: '{center}{red-fg}Extracting ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Uncompressed: {blue-fg}0 MB{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}'
+                content: '{center}{red-fg}Extracting ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Uncompressed: {blue-fg}0 MB{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + 'Compressed size: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}'
             };
         }
         const grid = new blessed_contrib_1.default.grid({
@@ -72,7 +72,7 @@ class GunzipUI extends UI_1.UI {
         const dataKB = round_1.round(data.length / 1000, 2);
         const remainingMB = round_1.round((this.total - written) / 1000000, 2);
         const ETA = eta_1.eta(dataKB, remainingMB);
-        box.setContent('{center}{yellow-fg}Extracting{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Uncompressed: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataKB + ' KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
+        box.setContent('{center}{yellow-fg}Extracting{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Uncompressed: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataKB + ' KB/s{/}\n' + 'Compressed size: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
         let percent;
         if (isFinished) {
             percent = 100;

@@ -25,8 +25,9 @@ const gunzip = (source, filename = 'file', destination = __dirname, password) =>
     return new Promise((resolve, reject) => {
         checkDestination_1.checkDestination(destination);
         let fullFilename;
-        if (source.match(/\.\w+/g)) {
-            fullFilename = '' + filename + source.match(/\.\w+/g)[0];
+        let matches;
+        if ((matches = source.match(/\.\w+/g)) !== null) {
+            fullFilename = /\.\w+/.test(filename) ? filename : ('' + filename + matches[matches.length - 2]);
         }
         else {
             fullFilename = filename;
