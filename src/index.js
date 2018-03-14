@@ -9,7 +9,9 @@ const get_1 = require("./commands/get");
 const gzip_1 = require("./commands/gzip");
 commander_1.default
     .version('0.2.0', '-v, --version')
-    .description('Download files from the web');
+    .description('Some CLI utilities')
+    .name('node-baka')
+    .usage('[command] [options]');
 commander_1.default
     .command('get <url>')
     .alias('g')

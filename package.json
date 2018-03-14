@@ -1,6 +1,6 @@
 {
   "name": "node-baka",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A simple CLI tool with some utilities",
   "keywords": [
     "cli",

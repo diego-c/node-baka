@@ -5,8 +5,10 @@ import { get } from './commands/get';
 import { gzip } from './commands/gzip';
 
 program
-    .version('0.2.0', '-v, --version')
-    .description('Download files from the web');
+    .version('0.2.1', '-v, --version')
+    .description('Some CLI utilities')
+    .name('node-baka')
+    .usage('[command] [options]')
 
 program
     .command('get <url>')
