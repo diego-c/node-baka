@@ -2,13 +2,13 @@
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = __importDefault(require("commander"));
 const get_1 = require("./commands/get");
 const gzip_1 = require("./commands/gzip");
 commander_1.default
-    .version('0.2.0', '-v, --version')
+    .version('0.2.1', '-v, --version')
     .description('Some CLI utilities')
     .name('node-baka')
     .usage('[command] [options]');
