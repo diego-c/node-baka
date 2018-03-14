@@ -60,7 +60,7 @@ class DownloadUI extends UI_1.UI {
         });
         const bar = grid.set(8, 0, 4, 12, blessed_contrib_1.default.gauge, barOptions);
         const box = grid.set(0, 0, 8, 12, blessed_1.default.box, boxOptions);
-        this.screen.key(['escape', 'q'], (ch, key) => {
+        this.screen.key(['escape', 'q'], () => {
             return process.exit(0);
         });
         bar.setPercent(0);

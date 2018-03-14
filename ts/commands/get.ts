@@ -1,10 +1,7 @@
 import { createWriteStream, statSync } from 'fs';
-import blessed, { Widgets } from 'blessed';
-import contrib, { Widgets as ContribWidgets } from 'blessed-contrib';
 import * as path from 'path';
 import onFinished from 'on-finished';
 import { checkDestination } from '../utils/checkDestination';
-import * as https from "https";
 import { Status } from "../UI/Status";
 import { checkFilename } from '../utils/checkFilename';
 import { checkProtocol } from '../utils/checkProtocol';
@@ -55,7 +52,7 @@ const get = (url: string, filename: string = 'file', dest: string = __dirname) =
         });
       });
 
-      onFinished(res, (err: Error, res: IncomingMessage) => {
+      onFinished(res, (err: Error) => {
         const downloaded = statSync(path.resolve(dest, fullFilename)).size;
 
         if (!downloaded || (total && (downloaded < total))) {

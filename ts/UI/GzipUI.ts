@@ -3,6 +3,7 @@ import { Status } from './Status';
 import contrib, { Widgets as ContribWidgets } from 'blessed-contrib';
 import blessed, { Widgets } from 'blessed';
 import { round } from '../utils/round';
+import { eta } from '../utils/eta';
 
 class GzipUI extends UI {
 
@@ -38,7 +39,7 @@ class GzipUI extends UI {
 
         const box = grid.set(0, 0, 8, 12, blessed.box, boxOptions);
 
-        this.screen.key(['escape', 'q'], (ch, key) => {
+        this.screen.key(['escape', 'q'], () => {
             return process.exit(0);
         });
 
@@ -53,12 +54,15 @@ class GzipUI extends UI {
 
         const writtenMB: number = round(written / 1000000, 2);
         const dataMB: number = round(data.length / 1000000, 2);
+        const ETA: string = eta((data.length / 1000), round((this.total - written) / 1000000, 2));
 
-        box.setContent('{center}{yellow-fg}Compressing{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Written: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Data length: {blue-fg}' + dataMB + ' MB{/}\n' + 'Total: {blue-fg}' + round(this.total / 1000000, 2) + ' MB{/}');
+        box.setContent('{center}{yellow-fg}Compressing{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Written: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataMB + ' MB/s{/}\n' + 'Total: {blue-fg}' + round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
 
         let percent: number;
 
-        if (100 * written <= this.total) {
+        if (isFinished) {
+            percent = 100;
+        } else if (100 * written <= this.total) {
             percent = written / this.total;
         } else {
             percent = (100 * written) / this.total;

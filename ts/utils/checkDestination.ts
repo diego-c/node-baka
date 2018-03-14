@@ -11,7 +11,7 @@ const checkDestination = (dest: string) => {
     const destinations = dest.split('/');
     let currDest = destinations[0];
 
-    destinations.forEach((destination, i) => {
+    destinations.forEach((_, i) => {
         currDest = destinations.slice(0, i + 1).join('/');
         if (!existsSync(currDest)) {
             mkdirSync(currDest)

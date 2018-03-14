@@ -7,6 +7,7 @@ const UI_1 = require("./UI");
 const blessed_contrib_1 = __importDefault(require("blessed-contrib"));
 const blessed_1 = __importDefault(require("blessed"));
 const round_1 = require("../utils/round");
+const eta_1 = require("../utils/eta");
 class GzipUI extends UI_1.UI {
     constructor(fullFilename, destination, total) {
         super(fullFilename, destination, total);
@@ -34,7 +35,7 @@ class GzipUI extends UI_1.UI {
         });
         const bar = grid.set(8, 0, 4, 12, blessed_contrib_1.default.gauge, barOptions);
         const box = grid.set(0, 0, 8, 12, blessed_1.default.box, boxOptions);
-        this.screen.key(['escape', 'q'], (ch, key) => {
+        this.screen.key(['escape', 'q'], () => {
             return process.exit(0);
         });
         bar.setPercent(0);
@@ -45,9 +46,13 @@ class GzipUI extends UI_1.UI {
         let bar = status.bar, box = status.box;
         const writtenMB = round_1.round(written / 1000000, 2);
         const dataMB = round_1.round(data.length / 1000000, 2);
-        box.setContent('{center}{yellow-fg}Compressing{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Written: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Data length: {blue-fg}' + dataMB + ' MB{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}');
+        const ETA = eta_1.eta((data.length / 1000), round_1.round((this.total - written) / 1000000, 2));
+        box.setContent('{center}{yellow-fg}Compressing{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Written: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataMB + ' MB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
         let percent;
-        if (100 * written <= this.total) {
+        if (isFinished) {
+            percent = 100;
+        }
+        else if (100 * written <= this.total) {
             percent = written / this.total;
         }
         else {

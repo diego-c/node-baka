@@ -71,7 +71,7 @@ class DownloadUI extends UI {
 
         const box = grid.set(0, 0, 8, 12, blessed.box, boxOptions);
 
-        this.screen.key(['escape', 'q'], (ch, key) => {
+        this.screen.key(['escape', 'q'], () => {
             return process.exit(0);
         });
 

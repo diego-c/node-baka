@@ -10,7 +10,7 @@ const fs_1 = require("fs");
 const checkDestination = (dest) => {
     const destinations = dest.split('/');
     let currDest = destinations[0];
-    destinations.forEach((destination, i) => {
+    destinations.forEach((_, i) => {
         currDest = destinations.slice(0, i + 1).join('/');
         if (!fs_1.existsSync(currDest)) {
             fs_1.mkdirSync(currDest);

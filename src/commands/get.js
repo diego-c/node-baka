@@ -54,7 +54,7 @@ const get = (url, filename = 'file', dest = __dirname) => {
                     }
                 });
             });
-            on_finished_1.default(res, (err, res) => {
+            on_finished_1.default(res, (err) => {
                 const downloaded = fs_1.statSync(path.resolve(dest, fullFilename)).size;
                 if (!downloaded || (total && (downloaded < total))) {
                     status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}');
