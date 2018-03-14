@@ -2,6 +2,7 @@
 
 import program, { Command } from 'commander';
 import { get } from './commands/get';
+import { gzip } from './commands/gzip';
 
 program
     .version('0.1.2', '-v, --version')
@@ -16,5 +17,16 @@ program
     .action((url: string, cmd: Command) => {
         get(url, cmd.filename, cmd.destination);
     });
+
+program
+    .command('gzip <source>')
+    .alias('z')
+    .description('Gzip a local file')
+    .option('-f, --filename', 'Filename for the compressed file')
+    .option('-d, --destination <dest>', 'Destination folder for the compressed file')
+    .option('-p, --password', 'Encrypt the file with the given password')
+    .action((source: string, cmd: Command) => {
+        gzip(source, cmd.filename, cmd.destination, cmd.password);
+    })
 
 program.parse(process.argv);

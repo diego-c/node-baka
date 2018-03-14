@@ -20,7 +20,7 @@ import { DownloadUI } from '../UI/DownloadUI';
  * @param { string | null } dest Path to store the file. Defaults to the current directory.
  * @returns { Promise } Either resolves with an object containing fullFilename and destination or rejects with an error
  */
-const get = (url: string, filename = 'file', dest = __dirname) => {
+const get = (url: string, filename: string = 'file', dest: string = __dirname) => {
 
   return new Promise((resolve, reject) => {
 
