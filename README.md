@@ -34,6 +34,28 @@ Name of the file to be downloaded. Defaults to "file".
 
 __NOTE:__ If you don't specify the file extension, node-baka will try to guess based on the `url`. You should avoid omitting it.
 
+## `node-baka gzip|z <source> [options]`
+
+Compress a local file.
+
+__NOTE:__ 
+
+- The `source` path __must__ point directly to the file you want to compress, e.g. `~/docs/file.txt`
+
+### Options:
+
+#### `-d, --destination <destination>`
+
+Where to store the compressed file. Defaults to the current directory.
+
+#### `-f, --filename <filename>`
+
+Name of the compressed file. Defaults to `file._extension_`.
+
+#### `-p, --password <password>`
+
+Encrypt the compressed file with the given password.
+
 # Installation
 
 `npm install -g node-baka`

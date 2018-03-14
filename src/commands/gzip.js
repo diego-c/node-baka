@@ -13,11 +13,9 @@ const zlib_1 = require("zlib");
 const WriteError_1 = require("../errors/WriteError");
 const ReadError_1 = require("../errors/ReadError");
 const FileError_1 = require("../errors/FileError");
+const crypto_1 = require("crypto");
 const gzip = (source, filename = 'file', destination = __dirname, password) => {
     return new Promise((resolve, reject) => {
-        if (password) {
-            // TODO: implement encryption
-        }
         checkDestination_1.checkDestination(destination);
         const fullFilename = checkFilename_1.checkFilename(filename, source);
         const sourceFile = fs_1.createReadStream(source);
@@ -27,8 +25,11 @@ const gzip = (source, filename = 'file', destination = __dirname, password) => {
             .then(size => {
             UI = new GzipUI_1.GzipUI(fullFilename, destination, size);
             status = UI.buildUI();
-            sourceFile
-                .pipe(zlib_1.createGzip())
+            let gzipFile = sourceFile.pipe(zlib_1.createGzip());
+            if (password) {
+                gzipFile = gzipFile.pipe(crypto_1.createCipher('aes192', password));
+            }
+            gzipFile
                 .on('data', (chunk) => {
                 written = compressedFile.bytesWritten;
                 currentChunk = chunk;

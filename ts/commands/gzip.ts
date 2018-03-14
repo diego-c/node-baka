@@ -9,13 +9,11 @@ import { Status } from '../UI/Status';
 import { WriteError } from '../errors/WriteError';
 import { ReadError } from '../errors/ReadError';
 import { FileError } from '../errors/FileError';
+import { createCipher } from 'crypto';
 
 const gzip = (source: string, filename: string = 'file', destination: string = __dirname, password?: string): Promise<Object | null> => {
 
     return new Promise((resolve: Function, reject: Function) => {
-        if (password) {
-            // TODO: implement encryption
-        }
 
         checkDestination(destination);
         const fullFilename: string = checkFilename(filename, source);
@@ -27,15 +25,20 @@ const gzip = (source: string, filename: string = 'file', destination: string = _
         let UI: GzipUI,
             status: Status,
             written: number,
-            currentChunk: Buffer;
+            currentChunk: Buffer | string;
 
         gzipSize.file(source)
             .then(size => {
+
                 UI = new GzipUI(fullFilename, destination, size);
                 status = UI.buildUI();
 
-                sourceFile
-                    .pipe(createGzip())
+                let gzipFile: any = sourceFile.pipe(createGzip());
+
+                if (password) {
+                    gzipFile = gzipFile.pipe(createCipher('aes192', password));
+                }
+                gzipFile
                     .on('data', (chunk: Buffer) => {
                         written = compressedFile.bytesWritten;
                         currentChunk = chunk;

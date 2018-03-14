@@ -45,9 +45,10 @@ class GzipUI extends UI_1.UI {
     updateUI(status, written, data, isFinished) {
         let bar = status.bar, box = status.box;
         const writtenMB = round_1.round(written / 1000000, 2);
-        const dataMB = round_1.round(data.length / 1000000, 2);
-        const ETA = eta_1.eta((data.length / 1000), round_1.round((this.total - written) / 1000000, 2));
-        box.setContent('{center}{yellow-fg}Compressing{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Written: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataMB + ' MB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
+        const dataKB = round_1.round(data.length / 1000, 2);
+        const remainingMB = round_1.round((this.total - written) / 1000000, 2);
+        const ETA = eta_1.eta(dataKB, remainingMB);
+        box.setContent('{center}{yellow-fg}Compressing{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Written: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataKB + ' KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
         let percent;
         if (isFinished) {
             percent = 100;
