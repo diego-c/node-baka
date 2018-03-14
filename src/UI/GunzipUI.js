@@ -12,18 +12,18 @@ const eta_1 = require("../utils/eta");
  * Class to generate UIs for compressing files
  * @extends UI
  */
-class GzipUI extends UI_1.UI {
+class GunzipUI extends UI_1.UI {
     /**
-     * Instantiate a new GzipUI
+     * Instantiate a new GunzipUI
      * @param { string } fullFilename The filename in the format filename._extension_
-     * @param { string } destination The path to store the compressed file
+     * @param { string } destination The path to store the uncompressed file
      * @param { number } total The total amount of bytes of the source file
      */
     constructor(fullFilename, destination, total) {
         super(fullFilename, destination, total);
     }
     /**
-      * GzipUI implementation of buildUI
+      * GunzipUI implementation of buildUI
       * @param { ContribWidgets.GaugeOptions | null } barOptions Options for the gauge progress bar to be displayed in the UI
       * @param { Widgets.BoxOptions | null } boxOptions Options for the text box to be displayed in the UI
       * @returns { Status } The current Status of the rendered elements
@@ -41,7 +41,7 @@ class GzipUI extends UI_1.UI {
         if (!boxOptions) {
             boxOptions = {
                 tags: true,
-                content: '{center}{red-fg}Compressing ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Written: {blue-fg}0 MB{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}'
+                content: '{center}{red-fg}Extracting ' + '{magenta-fg}' + this.fullFilename + '{/magenta-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: 00:00:00{/}\n' + '{center}Uncompressed: {blue-fg}0 MB{/}\n' + '{center}Speed: {blue-fg}0 KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}'
             };
         }
         const grid = new blessed_contrib_1.default.grid({
@@ -59,11 +59,11 @@ class GzipUI extends UI_1.UI {
         return { bar, box, screen: this.screen };
     }
     /**
-   * GzipUI implementation of updateUI
+   * GunzipUI implementation of updateUI
    * @param { Status } status The current status object to be updated
-   * @param { number } written The amount of bytes written to the compressed file
+   * @param { number } written The amount of bytes written to the uncompressed file
    * @param { Buffer | string } data The amount of bytes transferred
-   * @param { boolean } isFinished Check if the compression has finished
+   * @param { boolean } isFinished Check if the extraction has finished
    * @returns { void }
    */
     updateUI(status, written, data, isFinished) {
@@ -72,7 +72,7 @@ class GzipUI extends UI_1.UI {
         const dataKB = round_1.round(data.length / 1000, 2);
         const remainingMB = round_1.round((this.total - written) / 1000000, 2);
         const ETA = eta_1.eta(dataKB, remainingMB);
-        box.setContent('{center}{yellow-fg}Compressing{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Written: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataKB + ' KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
+        box.setContent('{center}{yellow-fg}Extracting{/yellow-fg} ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: ' + '{green-fg}' + ETA + '{/}\n' + '{center}Uncompressed: {blue-fg}' + writtenMB + ' MB{/}\n' + '{center}Speed: {blue-fg}' + dataKB + ' KB/s{/}\n' + 'Total: {blue-fg}' + round_1.round(this.total / 1000000, 2) + ' MB{/}' + '\n\n' + (isFinished ? '{center}{green-fg}Done!{/}\n' + '{center}{red-fg}Press Q or Escape to quit{/}' : ''));
         let percent;
         if (isFinished) {
             percent = 100;
@@ -87,4 +87,4 @@ class GzipUI extends UI_1.UI {
         this.screen.render();
     }
 }
-exports.GzipUI = GzipUI;
+exports.GunzipUI = GunzipUI;
