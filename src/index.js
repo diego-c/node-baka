@@ -8,7 +8,7 @@ const commander_1 = __importDefault(require("commander"));
 const get_1 = require("./commands/get");
 const gzip_1 = require("./commands/gzip");
 commander_1.default
-    .version('0.1.2', '-v, --version')
+    .version('0.2.0', '-v, --version')
     .description('Download files from the web');
 commander_1.default
     .command('get <url>')

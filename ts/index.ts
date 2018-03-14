@@ -5,7 +5,7 @@ import { get } from './commands/get';
 import { gzip } from './commands/gzip';
 
 program
-    .version('0.1.2', '-v, --version')
+    .version('0.2.0', '-v, --version')
     .description('Download files from the web');
 
 program
