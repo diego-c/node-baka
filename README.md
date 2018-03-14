@@ -76,7 +76,7 @@ Name of the extracted file. Defaults to `file._extension_`.
 
 #### `-p, --password <password>`
 
-Decrypt the compressed file with the given password.
+Decrypt the compressed file with the given password, if necessary.
 
 # Installation
 
