@@ -22,9 +22,9 @@ program
     .command('gzip <source>')
     .alias('z')
     .description('Gzip a local file')
-    .option('-f, --filename', 'Filename for the compressed file')
-    .option('-d, --destination <dest>', 'Destination folder for the compressed file')
-    .option('-p, --password', 'Encrypt the file with the given password')
+    .option('-f, --filename <filename>', 'Filename for the compressed file')
+    .option('-d, --destination <destination>', 'Destination folder for the compressed file')
+    .option('-p, --password <password>', 'Encrypt the file with the given password')
     .action((source: string, cmd: Command) => {
         gzip(source, cmd.filename, cmd.destination, cmd.password);
     })

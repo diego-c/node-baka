@@ -9,4 +9,4 @@ const getExtension = (url: string): string => {
     return '.' + urlArr[urlArr.length - 1];
 }
 
-module.exports = getExtension;
+export { getExtension };

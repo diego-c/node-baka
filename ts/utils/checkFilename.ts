@@ -1,3 +1,4 @@
+import { getExtension } from './getExtension';
 /**
  * Checks if the provided filename contains a file extension
  * If it doesn't, tries to guess the extension from the provided URL and appends it to the filename
@@ -9,7 +10,7 @@
 const checkFilename = (filename: string, url: string): string => {
     let fullFilename = filename;
     if (!/\..+/.test(filename)) {
-        fullFilename = '' + filename + require('./getExtension')(url)
+        fullFilename = '' + filename + getExtension(url)
     }
     return fullFilename;
 }
