@@ -1,3 +1,4 @@
+[![version](https://img.shields.io/badge/version-0.2.2-blue.svg)](https://img.shields.io/badge/version-0.2.2-blue.svg)
 [![dependencies Status](https://david-dm.org/diego-c/node-baka/status.svg)](https://david-dm.org/diego-c/node-baka)
 [![devDependencies Status](https://david-dm.org/diego-c/node-baka/dev-status.svg)](https://david-dm.org/diego-c/node-baka?type=dev)
 
