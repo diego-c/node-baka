@@ -118,9 +118,10 @@ class DownloadUI extends UI {
 
         status.box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + speed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
 
-        // TODO: fix bar % when going from 0 MB to the total / 100 (MB)
         let percent: number;
-        if (typeof downloaded === 'number') {
+        if (written >= this.total) {
+            percent = 100;
+        } else if (typeof downloaded === 'number') {
             percent = downloaded < (totalInMB / 100) ? round(downloaded / totalInMB, 2) : round(downloaded * 100 / totalInMB, 2);
         } else {
             percent = 0;

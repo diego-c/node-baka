@@ -1,7 +1,7 @@
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
-}
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const UI_1 = require("./UI");
 const blessed_1 = __importDefault(require("blessed"));
@@ -100,9 +100,11 @@ class DownloadUI extends UI_1.UI {
             estimated = 'Unknown';
         }
         status.box.setContent('{center}{red-fg}Downloading ' + '{green-fg}' + this.fullFilename + '{/green-fg}' + ' to {magenta-fg}' + this.destination + '{/}\n\n' + '{center}ETA: {#08a573-fg}' + estimated + '{/}\n' + '{center}Speed: {blue-fg} ' + speed + ' KB/s{/}\n' + '{center}Downloaded: {blue-fg}' + downloaded + ' MB{/}\n' + '{center}Remaining: {blue-fg}' + remaining + ' MB{/}\n' + (isFinished ? '\n{center}{green-fg}Download finished!{/}\n{center}Press Q or Escape to exit{/}' : ''));
-        // TODO: fix bar % when going from 0 MB to the total / 100 (MB)
         let percent;
-        if (typeof downloaded === 'number') {
+        if (written >= this.total) {
+            percent = 100;
+        }
+        else if (typeof downloaded === 'number') {
             percent = downloaded < (totalInMB / 100) ? round_1.round(downloaded / totalInMB, 2) : round_1.round(downloaded * 100 / totalInMB, 2);
         }
         else {
