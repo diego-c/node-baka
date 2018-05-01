@@ -33,6 +33,17 @@ abstract class UI {
      */
     abstract updateUI(status: Status, written: number, data: (Buffer | string), isFinished: boolean): void;
 
+    /**
+     * Error handler UI
+     * @param { Error } error The error object containing a message
+     * @param { Status | undefined } status The current status object
+     * @param { number | undefined } written The amount of bytes written to the file
+     * @param { Buffer | string | undefined } data The amount of bytes transferred
+     * @returns { void }
+     */
+
+    abstract errorUI(error: Error, status?: Status, written?: number, data?: (Buffer | string)): void;
+
     /** 
      * Base constructor to be extended for UIs
      * @param { string } fullFilename The filename in the format filename._extension_ 

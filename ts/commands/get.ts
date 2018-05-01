@@ -36,7 +36,8 @@ const get = (url: string, filename: string = 'file', dest: string = __dirname): 
       try {
         status = UI.buildUI();
       } catch (err) {
-        throw new UIError('Sorry, the UI could not be rendered!');
+        UI.errorUI(new UIError('Sorry, the UI could not be rendered ' + err))
+        //throw new UIError('Sorry, the UI could not be rendered!');
       }
 
       res.on('data', d => {
@@ -47,18 +48,24 @@ const get = (url: string, filename: string = 'file', dest: string = __dirname): 
           try {
             UI.updateUI(status, written, d, isFinished);
           } catch (err) {
-            throw new UIError('Sorry, the UI could not be updated!');
+            UI.errorUI(new UIError('Sorry, the UI could not be updated ' + err))
+            //throw new UIError('Sorry, the UI could not be updated!');
           }
         });
       });
 
       onFinished(res, (err: Error) => {
+        if (err) {
+          UI.errorUI(new DownloadError('The download failed! ' + err));
+          return reject(err);
+        }
         const downloaded = statSync(path.resolve(dest, fullFilename)).size;
 
         if (!downloaded || (total && (downloaded < total))) {
-          status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}')
-          status.screen.render();
+          UI.errorUI(new DownloadError('The download failed! ' + err));
           return reject(new DownloadError('The download failed! ' + err));
+          /* status.box.setContent('{center}{red-fg}Sorry, something went wrong.{/}\n' + '{center}{red-fg}Please double check if the URL provided is correct and try again.{/}\n\n' + '{center}{blue-fg}Press Q or Escape to exit.{/}')
+          status.screen.render(); */
         } else {
           return resolve({ fullFilename, destination: dest });
         }
@@ -68,7 +75,9 @@ const get = (url: string, filename: string = 'file', dest: string = __dirname): 
     })
   })
     .catch((err: Error) => {
-      console.log(err);
+      const UI: DownloadUI = new DownloadUI(null, null, null);
+      UI.errorUI(err);
+      //console.log(err);
     })
 }
 
